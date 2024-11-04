@@ -19,12 +19,10 @@ module inert_intf (
 
   parameter FAST_SIM = 1; // Speed up simulation
 
-  //////////////////////////////////
-  // Internal Signals Declaration //
-  //////////////////////////////////
+
   logic [15:0] cmd, resp;        // SPI command and response
   logic [15:0] yaw_rf;           // Holds the yaw reading
-  logic C_Y_L, C_Y_H;      // Yaw rate low and high byte
+  logic C_Y_L;      // Yaw rate low
 
   logic snd, done;               // SPI control signals
   logic vld;                     // Valid yaw reading signal for inertial_integrator
@@ -32,7 +30,7 @@ module inert_intf (
   logic INT_FF1, INT_FF2;        // Double-flop synchronization for INT
 
   // State Encoding
-  typedef enum logic [2:0] { INIT1, INIT2, INIT3, INFLOOP, READ1, READ2 } state_t;
+  typedef enum logic [2:0] { INIT1, INIT2, INIT3, INFLOOP, YAWL, YAWH } state_t; //only 6 states needed for our optimization
   state_t state, next_state;
 
   ///////////////////////////////////////
@@ -79,18 +77,9 @@ module inert_intf (
     next_state = state;
     snd = 0;
     vld = 0;
-    C_Y_H = 0;
-    C_Y_L = 0
+    C_Y_L = 0;
 
     case (state)
-      INIT1: begin
-        // Initializing interrupt on data ready
-        cmd = 16'h0D02;
-        if (&timer) begin
-          snd = 1'b1;
-          next_state = INIT2;
-        end
-      end
 
       INIT2: begin
         // Configuring gyro for 416Hz data rate, �250�/sec range
@@ -115,36 +104,45 @@ module inert_intf (
         if (INT_FF2) begin
           snd = 1'b1;
           cmd = 16'hA6xx; // Read yaw rate low byte
-          next_state = READ1;
+          next_state = YAWL;
         end
       end
 
-      READ1: begin
+      YAWL: begin
         if (done) begin
           C_Y_L = 1;
           snd = 1'b1;
           cmd = 16'hA7xx; // Read yaw rate high byte
-          next_state = READ2;
+          next_state = YAWH;
         end
       end
 
-      READ2: begin
-        if (done) begin
-          C_Y_H = 1;
+      YAWH: begin //signal C_Y_H omitted for our optimization, only vld needed
+        if (done) begin 
           vld = 1'b1; // Valid yaw reading for inertial_integrator
           next_state = INFLOOP;
         end
       end
 
-      default: next_state = INIT1;
+      // default state is INIT1
+      default: begin
+        // Initializing interrupt on data ready
+        cmd = 16'h0D02;
+        if (&timer) begin
+          snd = 1'b1;
+          next_state = INIT2;
+        end
+      end
     endcase
   end
+
 
   ////////////////////////////////////////////////
   // Instantiate Angle Engine                   //
   // Processes angular rate readings to produce //
   // a heading reading.                         //
   ////////////////////////////////////////////////
+
   inertial_integrator #(FAST_SIM) iINT (
     .clk(clk),
     .rst_n(rst_n),
@@ -170,21 +168,20 @@ module inert_intf (
   
 
 
-  // HOLDING REGISTERS //
-  logic [7:0] yaw_l, yaw_h;
+  // HOLDING REGISTERS // 
+
+  //  we have an optimization where we only store the low (first) byte and only use 1 8-bit flop insetad of 2
+  logic [7:0] flopped_yaw_l;
+  
+  // store the first (low) byte //
   always_ff@(posedge clk, negedge rst_n)
     if(!rst_n)
-      yaw_l <= 0;
+      flopped_yaw_l <= 0;
     else if (C_Y_L)
-      yaw_l <= resp[7:0];
+      flopped_yaw_l <= resp[7:0];
   
-  always_ff@(posedge clk, negedge rst_n)  
-    if(!rst_n)
-      yaw_h <= 0;
-    else if (C_Y_H)
-      yaw_h <= resp[7:0];
 
-  assign yaw_rf = {yaw_h, yaw_l};
+  assign yaw_rf = {resp[7:0], flopped_yaw_l};
 
 
 endmodule
