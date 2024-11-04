@@ -78,6 +78,7 @@ module inert_intf (
     snd = 0;
     vld = 0;
     C_Y_L = 0;
+    cmd = 0;
 
     case (state)
 
@@ -103,7 +104,7 @@ module inert_intf (
         // Waiting for new data
         if (INT_FF2) begin
           snd = 1'b1;
-          cmd = 16'hA6xx; // Read yaw rate low byte
+          cmd[15:8] = 8'hA6; // Read yaw rate low byte
           next_state = YAWL;
         end
       end
@@ -112,7 +113,7 @@ module inert_intf (
         if (done) begin
           C_Y_L = 1;
           snd = 1'b1;
-          cmd = 16'hA7xx; // Read yaw rate high byte
+          cmd[15:8] = 8'hA7; // Read yaw rate high byte
           next_state = YAWH;
         end
       end
