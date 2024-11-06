@@ -1,0 +1,86 @@
+m255
+K4
+z2
+!s11f vlog 2023.3 2023.07, Jul 17 2023
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dI:/ECE_551/Exercise19
+vinert_intf
+2I:\ECE_551\Exercise20\inert_intf.sv
+Z0 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+!s110 1730906528
+!i10b 1
+!s100 camDR]QHmY>Og@]]_L_^A1
+IOD2ZF3;OEcm0YQPe[f1ga0
+S1
+Z1 dI:/ECE_551/Exercise20
+w1730903296
+8I:\ECE_551\Exercise20\inert_intf.sv
+FI:\ECE_551\Exercise20\inert_intf.sv
+!i122 10
+L0 7 182
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OL;L;2023.3;77
+r1
+!s85 0
+31
+Z4 !s108 1730906528.000000
+!s107 I:\ECE_551\Exercise20\inert_intf.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|I:\ECE_551\Exercise20\inert_intf.sv|
+!i113 0
+Z5 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z6 tCvgOpt 0
+vinert_intf_test
+2I:/ECE_551/Exercise20/inert_intf_test.sv
+R0
+!s110 1730906529
+!i10b 1
+!s100 FYOOZomRCPclV`BVHUHf[2
+Ie9XS4zkXnN3HHHTH7ALfe0
+S1
+R1
+w1730906520
+8I:/ECE_551/Exercise20/inert_intf_test.sv
+FI:/ECE_551/Exercise20/inert_intf_test.sv
+!i122 11
+L0 3 69
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 I:/ECE_551/Exercise20/inert_intf_test.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|I:/ECE_551/Exercise20/inert_intf_test.sv|
+!i113 0
+R5
+R6
+vreset_synch
+2I:\ECE_551\Exercise20\reset_synch.sv
+R0
+!s110 1730906876
+!i10b 1
+!s100 J3bZODRW;bl;^7c1RWbi93
+Ie0PYcZ`a:kfQIQb_;hndJ1
+S1
+R1
+w1730906874
+8I:\ECE_551\Exercise20\reset_synch.sv
+FI:\ECE_551\Exercise20\reset_synch.sv
+!i122 12
+L0 2 24
+R2
+R3
+r1
+!s85 0
+31
+!s108 1730906876.000000
+!s107 I:\ECE_551\Exercise20\reset_synch.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|I:\ECE_551\Exercise20\reset_synch.sv|
+!i113 0
+R5
+R6

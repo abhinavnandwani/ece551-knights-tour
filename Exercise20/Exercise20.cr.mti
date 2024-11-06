@@ -1,0 +1,15 @@
+I:/ECE_551/Exercise20/inert_intf_test.sv {1 {vlog -work work -vopt -sv -stats=none I:/ECE_551/Exercise20/inert_intf_test.sv
+Questa Intel Starter FPGA Edition-64 vlog 2023.3 Compiler 2023.07 Jul 17 2023
+-- Compiling module inert_intf_test
+
+Top level modules:
+	inert_intf_test
+
+} {} {}} I:/ECE_551/Exercise20/inert_intf.sv {1 {vlog -work work -vopt -sv -stats=none {I:\ECE_551\Exercise20\inert_intf.sv}
+Questa Intel Starter FPGA Edition-64 vlog 2023.3 Compiler 2023.07 Jul 17 2023
+-- Compiling module inert_intf
+
+Top level modules:
+	inert_intf
+
+} {} {}}
