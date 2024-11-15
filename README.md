@@ -13,6 +13,7 @@ The project is organized as follows:
   - `SPI_iNEMO4.sv`: Inertial sensor model.
   - `inertial_integrator.sv`: Processes inertial data for synthesis.
   - `IR_intf.sv`: Interface for IR sensors.
+  - `sponge.sv`: Plays a tune on [fill in use case]
 
 ## Design Overview
 The system consists of multiple interconnected modules to control the knight’s movement on the chessboard:
