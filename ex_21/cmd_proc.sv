@@ -45,6 +45,8 @@
     always_ff @(posedge clk or negedge rst_n) 
     if (!rst_n)
         frwrd <= 10'h000;
+    else if (clr_frwrd)
+        frwrd <= 0;
     else if (en)
         frwrd <= frwrd + inc;
 
@@ -84,7 +86,7 @@
             line_counter <= line_counter + 1'b1;
     end
     
-    assign move_done = ~(desired_sqaures - line_counter) ? 1'b1 : 1'b0; 
+    assign move_done = !(desired_sqaures - line_counter) ? 1'b1 : 1'b0; 
 
 
     //// PID interface ////
@@ -131,11 +133,12 @@
         inc_frwrd = 0;
         dec_frwrd = 0;
         moving = 1'b0;
+        send_resp = 0;
      
 
         case (state)
 
-        CALIBRATE : if (cal_done) send_resp = 1'b1;
+        CALIBRATE : if (cal_done) begin send_resp = 1'b1; nxt_state = IDLE; end
         MOVE_I : begin
                     moving = 1'b1;
                     if (error < 12'sh02C || error < 12'shfd4) 

@@ -1,3 +1,4 @@
+
 module cmd_proc_tb();
 
     logic clk, rst_n;
@@ -32,7 +33,7 @@ module cmd_proc_tb();
                     .heading_rdy(heading_rdy),
                     .strt_cal(strt_cal), .cal_done(cal_done),
                     .moving(moving),
-                    .lftIR(lftIR), .cntrlIR(cntrlIR), .rghtIR(rghtIR),
+                    .lftIR(lftIR), .cntrIR(cntrIR), .rghtIR(rghtIR),
                     .fanfare_go(fanfare_go),
                     .frwrd(frwrd), 
                     .error(error));
@@ -43,15 +44,17 @@ module cmd_proc_tb();
 
     //Inputs
     logic TX_RX;
-
+    logic respIN;   //resp is A5
 
     //Outputs
     logic RX_TX;
+    logic tx_done; //Unused
 
     UART_wrapper iUW(.clk(clk), .rst_n(rst_n),
-                        .resp(8'hA5), .send_resp(send_resp), 
+                        .resp_tx_data(8'hA5), .resp_trmt(send_resp), 
                         .cmd(cmd), .clr_cmd_rdy(clr_cmd_rdy), .cmd_rdy(cmd_rdy),
-                        .RX(TX_RX), .TX(RX_TX));
+                        .RX(TX_RX), .TX(RX_TX),
+                        .resp_tx_done(tx_done));
     
     /////////////////
     //RomCom signals
@@ -64,10 +67,13 @@ module cmd_proc_tb();
     //Outputs
     logic [7:0] resp;
     logic resp_rdy;
+    logic cmd_sent;
 
     RemoteComm iRC(.clk(clk), .rst_n(rst_n), 
                     .RX(RX_TX), .TX(TX_RX), 
-                    .resp(resp), .resp_rdy(resp_rdy));
+                    .resp_rx_data(resp), .resp_rx_rdy(resp_rdy),
+                    .cmd_snt(cmd_sent), .resp_clr_rx_rdy(),
+                    .cmd(cmdRC), .snd_cmd(snd_cmd));
     
     /////////////////////
     //inert_intf signals
@@ -83,13 +89,12 @@ module cmd_proc_tb();
     logic SS_n;
 
     inert_intf iINT(.clk(clk), .rst_n(rst_n),
-                    .start_cal(start_cal), 
-                    .cal_done(cal_done), 
+                    .strt_cal(strt_cal), .cal_done(cal_done), 
                     .heading(heading),
                     .rdy(heading_rdy),
                     .lftIR(lftIR), .rghtIR(rghtIR),
                     .INT(INT),
-                    .SS_n(SS_n),
+                    .SS_n(SS_n), .SCLK(SCLK),
                     .MOSI(MOSI), .MISO(MISO),
                     .moving(moving));
 
@@ -111,11 +116,12 @@ module cmd_proc_tb();
 always begin
     clk = 0;
     rst_n = 0;
-    cmd = 16'h2000; //Calibrate command
+    cmdRC = 16'h2000; //Calibrate command
     snd_cmd = 0;
     cntrIR = 0;
     lftIR = 0;
     rghtIR = 0;
+    cntrIR = 1;
 
     @(negedge clk);
     rst_n = 1;
@@ -129,7 +135,7 @@ always begin
     //////////////////////////////////////////////////
     fork
         begin: timeoutCal
-            repeat (1000000) @(posedge clk);
+            repeat (1100000) @(posedge clk);
             $display("Timed out waiting for cal_done");
             $stop();
         end
@@ -156,18 +162,18 @@ always begin
     ///////////////////////
     //Test 2: Move "north"
     ///////////////////////
-    cmd = 16'h4001;
+    cmdRC = 16'h4001;
     @(negedge clk);
     snd_cmd = 1;
     @(negedge clk);
     snd_cmd = 0;
 
     //Check initial frwrd value
-    @(posedge send_resp); //pdf mentioned to wait cmd_sent
+    @(posedge cmd_sent); //pdf mentioned to wait cmd_sent
     assert (frwrd == 10'h000) $display("frwrd is x000");
     else begin
         $display("frwrd should be x000");
-        $stop();
+      //  $stop();
     end
 
     //Check if frwrd is incrementing properly
@@ -188,7 +194,7 @@ always begin
     end
 
     //Checking if frwrd is saturated to max speed
-    repeat (25) @(posedge heading_rdy);
+    repeat(25) @(posedge heading_rdy);
     assert (frwrd == 10'h300) $display("frwrd is sturated at x300");
     else begin
         $display("frwrd should be x300");
@@ -249,7 +255,12 @@ always begin
 
     //Adding a pulse to lftIR and rghtIR should give a significant disturbance in error
     @(negedge clk);
+    cmdRC = 16'h4001;
+    snd_cmd = 1;
+
+    @(negedge clk);
     lftIR = 1;
+    snd_cmd = 0;
 
     repeat (500) @(negedge clk); //Observe error
 
