@@ -1,6 +1,6 @@
-    module cmd_proc(clk,rst_n,cmd,cmd_rdy,clr_cmd_rdy,send_resp,strt_cal,
-                cal_done,heading,heading_rdy,lftIR,cntrIR,rghtIR,error,
-                frwrd,moving,tour_go,fanfare_go);
+module cmd_proc(clk,rst_n,cmd,cmd_rdy,clr_cmd_rdy,send_resp,strt_cal,
+            cal_done,heading,heading_rdy,lftIR,cntrIR,rghtIR,error,
+            frwrd,moving,tour_go,fanfare_go);
                 
     parameter FAST_SIM = 1;		// speeds up incrementing of frwrd register for faster simulation
         
@@ -66,14 +66,14 @@
 
 
     // cntrIR rise edge detector
-    logic cntrIR_ff, cntrIR_rise;
+    logic cntrIR_ff, cntrIR_3ff,cntrIR_2ff,cntrIR_rise;
     always_ff@(posedge clk, negedge rst_n)
         if (!rst_n)
-            cntrIR_ff <= 0;
+            {cntrIR_3ff,cntrIR_2ff,cntrIR_ff} <= 0;
         else 
-            cntrIR_ff <= cntrIR;
+            {cntrIR_3ff,cntrIR_2ff,cntrIR_ff} <= {cntrIR_2ff,cntrIR_ff,cntrIR};
     
-    assign cntrIR_rise = ~cntrIR_ff & cntrIR;
+    assign cntrIR_rise = ~cntrIR_3ff & cntrIR_2ff;
 
     // line counter flop //
     logic [3:0] line_counter;
@@ -92,18 +92,19 @@
     //// PID interface ////
 
     // desired_heading flop //
-    logic [12:0] desired_heading;
+    logic signed [12:0] desired_heading;
     always_ff@(posedge clk, negedge rst_n)
         if(!rst_n)
             desired_heading <= 0;
         else if (move_cmd)
-            if (~|cmd[11:4]) //non zero check  
+            if (cmd[11:4] == 0) //non zero check  
                 desired_heading <= 0;
             else 
                 desired_heading <= {cmd[11:4], 4'b1111};
 
     // err_nudge logic //
     logic [11:0] nudge_left, nudge_right;
+    logic err_nudge;
     assign nudge_left = lftIR ? (FAST_SIM ?  12'h1ff:12'h05f) :12'h000;
     assign nudge_right = rghtIR ? (FAST_SIM ? 12'he00:12'hfa1 ):12'h000;
     assign err_nudge = nudge_left + nudge_right;
@@ -134,6 +135,7 @@
         dec_frwrd = 0;
         moving = 1'b0;
         send_resp = 0;
+        nxt_state = state;
      
 
         case (state)
@@ -141,7 +143,8 @@
         CALIBRATE : if (cal_done) begin send_resp = 1'b1; nxt_state = IDLE; end
         MOVE_I : begin
                     moving = 1'b1;
-                    if (error < 12'sh02C || error < 12'shfd4) 
+                    clr_frwrd = 1'b1;
+                    if ((error < $signed(12'h02C)) && (error > $signed(12'hfd4))) 
                         nxt_state = MOVE_II; 
         end
         MOVE_II : begin
@@ -168,7 +171,7 @@
                     clr_cmd_rdy = 1'b1;
                     casex(cmd[15:12])
                     4'b0010 : begin nxt_state = CALIBRATE; strt_cal =  1'b1; end
-                    4'b010x : begin nxt_state = MOVE_I; move_cmd = 1'b1; clr_frwrd = 1'b1; end
+                    4'b010x : begin nxt_state = MOVE_I; move_cmd = 1'b1; end
                     4'b0110 : tour_go = 1'b1; // hand off to tour module
                     default : nxt_state = state;
                     endcase
@@ -182,3 +185,4 @@
 
 
     endmodule
+

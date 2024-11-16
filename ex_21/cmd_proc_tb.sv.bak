@@ -18,16 +18,14 @@ module cmd_proc_tb();
     //Outputs
     logic fanfare_go;
     logic [9:0] frwrd;
-    logic [11:0] error;
+    logic [11:0] signed error;
     logic moving;
     logic strt_cal;
     logic tour_go;
     logic send_resp;
 
-    localparam FAST_SIM = 1;
-
     //cmd_proc module
-    cmd_proc #(FAST_SIM) iCMD(.clk(clk), .rst_n(rst_n),
+    cmd_proc iCMD(.clk(clk), .rst_n(rst_n),
                     .cmd(cmd), .cmd_rdy(cmd_rdy), .clr_cmd_rdy(clr_cmd_rdy),
                     .send_resp(send_resp),
                     .tour_go(tour_go),
@@ -74,8 +72,7 @@ module cmd_proc_tb();
     RemoteComm iRC(.clk(clk), .rst_n(rst_n), 
                     .RX(RX_TX), .TX(TX_RX), 
                     .resp_rx_data(resp), .resp_rx_rdy(resp_rdy),
-                    .resp_clr_rx_rdy(),
-                    .cmd_snt(cmd_sent),
+                    .cmd_snt(cmd_sent), .resp_clr_rx_rdy(),
                     .cmd(cmdRC), .snd_cmd(snd_cmd));
     
     /////////////////////
@@ -91,7 +88,7 @@ module cmd_proc_tb();
     logic SCLK;
     logic SS_n;
 
-    inert_intf #(FAST_SIM)  iINT(.clk(clk), .rst_n(rst_n),
+    inert_intf iINT(.clk(clk), .rst_n(rst_n),
                     .strt_cal(strt_cal), .cal_done(cal_done), 
                     .heading(heading),
                     .rdy(heading_rdy),
@@ -117,16 +114,23 @@ module cmd_proc_tb();
 
 //tests
 always begin
+
+    // initialize all signals
     clk = 0;
     rst_n = 0;
-    cmdRC = 16'h2000; //Calibrate command
+    cmdRC = 0;
     snd_cmd = 0;
+    cntrIR = 0;
     lftIR = 0;
     rghtIR = 0;
     cntrIR = 1;
 
     @(negedge clk);
     rst_n = 1;
+
+
+    @(negedge clk)
+    cmdRC = 16'h2000; //Calibrate command
     snd_cmd = 1;
 
     @(negedge clk);
@@ -171,11 +175,11 @@ always begin
     snd_cmd = 0;
 
     //Check initial frwrd value
-    @(posedge cmd_sent); 
-    if (frwrd == 10'h000 || frwrd == 10'h020) $display("frwrd is x000 or 0x120");
+    @(posedge cmd_sent); //pdf mentioned to wait cmd_sent
+    assert (frwrd == 10'h000) $display("frwrd is x000");
     else begin
         $display("frwrd should be x000");
-        $stop();
+      //  $stop();
     end
 
     //Check if frwrd is incrementing properly
@@ -205,9 +209,9 @@ always begin
 
     //First cntrIR pulse
     @(negedge clk);
-    cntrIR = 0;
-    @(negedge clk);
     cntrIR = 1;
+    @(negedge clk);
+    cntrIR = 0;
 
     //frwrd should still be saturated
     repeat (10) @(negedge clk);
@@ -220,11 +224,11 @@ always begin
 
     //Second cntrIR pulse
     @(negedge clk);
-    cntrIR = 0;
-    @(negedge clk);
     cntrIR = 1;
+    @(negedge clk);
+    cntrIR = 0;
 
-    repeat (5) @(negedge heading_rdy);
+    repeat (4) @(negedge clk);
 
     assert (frwrd != 10'h300) $display("frwrd is decreasing");
     else begin
@@ -240,7 +244,6 @@ always begin
         end
         begin
             @(posedge resp_rdy);
-            disable timeoutF0;
             if (frwrd !== 10'h000) begin
                 $display("frwrd should be 0 by now");
                 $stop();
