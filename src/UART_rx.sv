@@ -31,8 +31,10 @@ module UART_rx(clk,rst_n,RX,rx_data,clr_rdy,rdy);
 
 
     // BIT COUNTER
-    always_ff@(posedge clk)
-        if (start)
+    always_ff@(posedge clk, negedge rst_n)
+        if (!rst_n)
+          bit_cnt <= 0;
+        else if (start)
             bit_cnt <= 0;
         else if (shift)
             bit_cnt <= bit_cnt +1'b1;
@@ -40,15 +42,19 @@ module UART_rx(clk,rst_n,RX,rx_data,clr_rdy,rdy);
     assign baud_value = start ? 1302:2604;
     assign shift = (baud_cnt == 0) ? 1'b1:1'b0;
     // BAUD COUNTER
-    always_ff@(posedge clk)
-        if (start | shift)
+    always_ff@(posedge clk, negedge rst_n)
+        if (!rst_n)
+          baud_cnt <= 0;
+        else if (start | shift)
             baud_cnt <= baud_value;
         else if (receiving)
             baud_cnt <= baud_cnt - 1'b1;
     
     // SHIFTER
-    always_ff@(posedge clk)
-        if (shift)
+    always_ff@(posedge clk, negedge rst_n)
+        if (!rst_n)
+          rx_shift_reg <= 0;
+        else if (shift)
             rx_shift_reg <= {RX_2ff,rx_shift_reg[8:1]};
     
 

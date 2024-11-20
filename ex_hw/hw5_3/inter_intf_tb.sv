@@ -1,3 +1,8 @@
+/* 
+    Team            : Latch Liberation Front - Abhinav, Damion, Miles, YV
+    Filename        : inter_intf_tb.sv  
+*/
+
 module inter_intf_tb;
 
     // Testbench signals

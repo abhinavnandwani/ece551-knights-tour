@@ -28,8 +28,10 @@ module UART_tx(clk,rst_n,TX,trmt,tx_data,tx_done);
 	
 	
 	// BIT COUNTER
-	always_ff@(posedge clk)
-		if (init) 
+	always_ff@(posedge clk, negedge rst_n)
+		if (!rst_n)
+			bit_cnt <= 0;
+		else if (init) 
 			bit_cnt <= 0;
 		else if(shift) 
 			bit_cnt <= bit_cnt +1; //every time shit is asserted, a complete bit has been received. 
@@ -37,10 +39,13 @@ module UART_tx(clk,rst_n,TX,trmt,tx_data,tx_done);
 	
 	//BAUD COUNTER
 	assign shift = (baud_cnt == 2604) ? 1'b1:1'b0; //shit every 2604 cycles (baud rate)
-	always_ff@(posedge clk)
+	always_ff@(posedge clk, negedge rst_n)
+
+		if (!rst_n)
+			baud_cnt <= 0;
 		
 		// init has priority over shift
-		if (init || shift)
+		else if (init || shift)
 			baud_cnt <= '0;
 		else if(transmitting) //cnt till 2604 
 			baud_cnt <= baud_cnt +1;
