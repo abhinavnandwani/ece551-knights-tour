@@ -35,7 +35,14 @@ module cmd_proc(clk,rst_n,cmd,cmd_rdy,clr_cmd_rdy,send_resp,strt_cal,
     logic zero, max_spd, en;
     // If inc_frwrd is high, pick between 0x20 and 0x03; otherwise, 
     // if dec_frwrd is high pick double 0x20 and 0x03 otherwise 0
-    assign inc = inc_frwrd ? (FAST_SIM ? 8'h20 : 8'h03) : (dec_frwrd ? (FAST_SIM ? 8'hC0 : 8'hFA) : 8'h00);
+    generate
+      if (FAST_SIM) begin
+          assign inc = inc_frwrd ? 8'h20 : (dec_frwrd ? 8'hC0 : 8'h00);
+      end else begin
+          assign inc = inc_frwrd ? 8'h03 : (dec_frwrd ? 8'hFA : 8'h00);
+      end
+    endgenerate
+    
 
     assign max_spd = &frwrd[9:8];
     assign zero = ~|frwrd;
@@ -105,8 +112,16 @@ module cmd_proc(clk,rst_n,cmd,cmd_rdy,clr_cmd_rdy,send_resp,strt_cal,
     // err_nudge logic //
     logic [11:0] nudge_left, nudge_right;
     logic err_nudge;
-    assign nudge_left = lftIR ? (FAST_SIM ?  12'h1ff:12'h05f) :12'h000;
-    assign nudge_right = rghtIR ? (FAST_SIM ? 12'he00:12'hfa1 ):12'h000;
+    generate
+    if (FAST_SIM) begin
+          assign nudge_left  = lftIR  ? 12'h1FF : 12'h000;
+          assign nudge_right = rghtIR ? 12'hE00 : 12'h000;
+      end else begin
+          assign nudge_left  = lftIR  ? 12'h05F : 12'h000;
+          assign nudge_right = rghtIR ? 12'hFA1 : 12'h000;
+      end
+    endgenerate
+
     assign err_nudge = nudge_left + nudge_right;
 
     assign error = heading - desired_heading + err_nudge;
@@ -162,10 +177,7 @@ module cmd_proc(clk,rst_n,cmd,cmd_rdy,clr_cmd_rdy,send_resp,strt_cal,
                          send_resp = 1'b1;
                          nxt_state = IDLE;
                     end
-        end
-
-                    
-
+        end             
         // IDLE state //
         default : if (cmd_rdy) begin
                     clr_cmd_rdy = 1'b1;
@@ -177,12 +189,5 @@ module cmd_proc(clk,rst_n,cmd,cmd_rdy,clr_cmd_rdy,send_resp,strt_cal,
                     endcase
         end 
         endcase
-
     end
-
-            
-                            
-
-
     endmodule
-
