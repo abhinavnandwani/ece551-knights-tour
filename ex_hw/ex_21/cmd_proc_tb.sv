@@ -172,7 +172,7 @@ always begin
 
     //Check initial frwrd value
     @(posedge cmd_sent); 
-    if (frwrd == 10'h000 || frwrd == 10'h020) $display("frwrd is x000 or 0x120");
+    if (frwrd == 10'h000 || frwrd == 10'h020) $display("frwrd is x000 or 0x020");
     else begin
         $display("frwrd should be x000");
         $stop();
