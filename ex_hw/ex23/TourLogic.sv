@@ -14,20 +14,17 @@ module TourLogic(
     logic [4:0] move_num;                 // Current move number (1 to 24)
     logic [2:0] xx, yy;                   // Current knight position
     logic [2:0] nxt_xx, nxt_yy;           // Next knight position
-    logic update_position;
+    logic update_position,init;
 
     // Knight's possible moves (delta values)
-    logic [2:0] dx[0:7], dy[0:7];
-    initial begin
-        dx[0] = -2; dy[0] = -1; dx[1] = -1; dy[1] = -2;
-        dx[2] =  1; dy[2] = -2; dx[3] =  2; dy[3] = -1;
-        dx[4] =  2; dy[4] =  1; dx[5] =  1; dy[5] =  2;
-        dx[6] = -1; dy[6] =  2; dx[7] = -2; dy[7] =  1;
-    end
+    logic signed [2:0] dx[0:7], dy[0:7];
+
+    assign dx = {1,-1,-2,-2,-1,1,2,2};
+    assign dy = {2,2,1,-1,-2,-2,-1,1};
 
     // FSM states
     typedef enum logic [2:0] {
-        IDLE, INIT, CALC_MOVES, SELECT_MOVE, UPDATE_POS, BACKTRACK, COMPLETE
+        IDLE, INIT, CALC_MOVES, SELECT_MOVE, UPDATE_POS, COMPLETE
     } state_t;
     state_t state, next_state;
 
@@ -54,12 +51,44 @@ module TourLogic(
         return degree;
     endfunction
 
+    // move register 
+    always_ff@(posedge clk, negedge rst_n) begin
+        if (!rst_n) begin
+            xx <= 0;
+            yy <= 0;
+        end else if (init) begin
+            xx <= x_start;
+            yy <= y_start;
+        end else if (update_position) begin
+            xx <= nxt_xx;
+            yy <= nxt_yy;
+        end
+    end
+
+    // move register 
+    always_ff@(posedge clk, negedge rst_n) begin
+        if (!rst_n) begin
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 5; j++)
+                    board[i][j] = 0;
+        end else if (init) begin
+            board[x_start][y_start] <= 5'h1;
+        end else if (update_position) begin
+            board[nxt_xx][nxt_yy] <= move_num + 1;
+        end
+    end
+
+    
+
+        
+
     // FSM next state and output logic
     always_comb begin
         // Default values
         next_state = state;
         done = 0;
         update_position = 0;
+        init = 0;
 
         case (state)
             IDLE: begin
@@ -70,12 +99,7 @@ module TourLogic(
 
             INIT: begin
                 // Initialize board and position
-                for (int i = 0; i < 5; i++)
-                    for (int j = 0; j < 5; j++)
-                        board[i][j] = 0;
-                board[x_start][y_start] = 1;
-                xx = x_start;
-                yy = y_start;
+                init = 1'b1;
                 move_num = 1;
                 next_state = CALC_MOVES;
             end
@@ -101,7 +125,7 @@ module TourLogic(
                     if (poss_moves[move_num][i]) begin
                         logic [3:0] degree;
                         degree = calculate_degree(xx + dx[i], yy + dy[i]);
-                        if (degree < min_degree) begin
+                        if (degree <= min_degree) begin
                             min_degree = degree;
                             nxt_xx = xx + dx[i];
                             nxt_yy = yy + dy[i];
@@ -113,10 +137,7 @@ module TourLogic(
 
             UPDATE_POS: begin
                 // Update the board and position
-                board[nxt_xx][nxt_yy] = move_num + 1;
                 last_move[move_num] = (1 << (nxt_xx * 5 + nxt_yy));
-                xx = nxt_xx;
-                yy = nxt_yy;
                 update_position = 1'b1;
                 move_num = move_num + 1;
                 if (move_num == 24) begin
@@ -124,15 +145,6 @@ module TourLogic(
                 end else begin
                     next_state = CALC_MOVES;
                 end
-            end
-
-            BACKTRACK: begin
-                // Undo the last move and backtrack
-                move_num = move_num - 1;
-                xx = last_move[move_num][4:2];
-                yy = last_move[move_num][1:0];
-                board[xx][yy] = 0;
-                next_state = CALC_MOVES;
             end
 
             COMPLETE: begin
