@@ -14,7 +14,7 @@ module TourLogic(
     logic [4:0] move_num;                 // Current move number (1 to 24)
     logic [2:0] xx, yy;                   // Current knight position
     logic [2:0] nxt_xx, nxt_yy;           // Next knight position
-    logic update_position,init;
+    logic update_position, init;
 
     // Knight's possible moves (delta values)
     logic signed [2:0] dx[0:7], dy[0:7];
@@ -43,16 +43,16 @@ module TourLogic(
         logic [2:0] new_y;
         degree = 0;
         for (int j = 0; j < 8; j++) begin
-             new_x = tmp_x + dx[j];
-             new_y = tmp_y + dy[j];
+            new_x = tmp_x + dx[j];
+            new_y = tmp_y + dy[j];
             if (new_x >= 0 && new_x < 5 && new_y >= 0 && new_y < 5 && board[new_x][new_y] == 0)
                 degree++;
         end
         return degree;
     endfunction
 
-    // move register 
-    always_ff@(posedge clk, negedge rst_n) begin
+    // Position registers
+    always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             xx <= 0;
             yy <= 0;
@@ -65,12 +65,12 @@ module TourLogic(
         end
     end
 
-    // move register 
-    always_ff@(posedge clk, negedge rst_n) begin
+    // Board update
+    always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             for (int i = 0; i < 5; i++)
                 for (int j = 0; j < 5; j++)
-                    board[i][j] = 0;
+                    board[i][j] <= 0;
         end else if (init) begin
             board[x_start][y_start] <= 5'h1;
         end else if (update_position) begin
@@ -78,9 +78,32 @@ module TourLogic(
         end
     end
 
-    
+    // `last_move` register
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            for (int i = 0; i < 24; i++)
+                last_move[i] <= 0;
+        end else if (update_position) begin
+            last_move[move_num] <= (1 << (nxt_xx * 5 + nxt_yy));
+        end
+    end
 
-        
+    // `poss_moves` register
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            for (int i = 0; i < 24; i++)
+                poss_moves[i] <= 0;
+        end else if (state == CALC_MOVES) begin
+            poss_moves[move_num] <= 0;
+            for (int i = 0; i < 8; i++) begin
+                nxt_xx = xx + dx[i];
+                nxt_yy = yy + dy[i];
+                if (nxt_xx >= 0 && nxt_xx < 5 && nxt_yy >= 0 && nxt_yy < 5 && board[nxt_xx][nxt_yy] == 0) begin
+                    poss_moves[move_num][i] <= 1;
+                end
+            end
+        end
+    end
 
     // FSM next state and output logic
     always_comb begin
@@ -98,27 +121,16 @@ module TourLogic(
             end
 
             INIT: begin
-                // Initialize board and position
                 init = 1'b1;
                 move_num = 1;
                 next_state = CALC_MOVES;
             end
 
             CALC_MOVES: begin
-                // Calculate all possible moves from the current position
-                poss_moves[move_num] = 0;
-                for (int i = 0; i < 8; i++) begin
-                    nxt_xx = xx + dx[i];
-                    nxt_yy = yy + dy[i];
-                    if (nxt_xx >= 0 && nxt_xx < 5 && nxt_yy >= 0 && nxt_yy < 5 && board[nxt_xx][nxt_yy] == 0) begin
-                        poss_moves[move_num][i] = 1;
-                    end
-                end
                 next_state = SELECT_MOVE;
             end
 
             SELECT_MOVE: begin
-                // Select the move with the lowest onward degree
                 logic [3:0] min_degree;
                 min_degree = 8;
                 for (int i = 0; i < 8; i++) begin
@@ -136,8 +148,6 @@ module TourLogic(
             end
 
             UPDATE_POS: begin
-                // Update the board and position
-                last_move[move_num] = (1 << (nxt_xx * 5 + nxt_yy));
                 update_position = 1'b1;
                 move_num = move_num + 1;
                 if (move_num == 24) begin
@@ -162,3 +172,5 @@ module TourLogic(
     assign move = last_move[indx];
 
 endmodule
+
+
