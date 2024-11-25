@@ -1,0 +1,62 @@
+###########################################
+# Read Input Files and set Current Design #
+###########################################
+read_file -format sverilog {KnightsTour.sv, rst_synch.sv, inert_intf.sv, \
+  inertial_integrator.sv, SPI.sv, TourLogic.sv, TourCmd.sv, sponge.sv, \
+  cmd_proc.sv, UART_wrapper.sv, UART.v, UART_tx.sv, UART_rx.sv, PID.sv, \
+  MtrDrv.sv, PWM11.sv, IR_intf.sv}
+set current_design KnightsTour
+
+################
+# Set up clock #
+################
+create_clock -name "clk" -period 3 {clk}
+set_dont_touch_network [find port clk]
+set_clock_uncertainty 0.15 clk
+
+# Create a pointer to set properties for inputs other than clock
+set prim_inputs [remove_from_collection [all_inputs] [find port clk]]
+
+###########################################
+# Do input delay and drive strength stuff #
+###########################################
+set_input_delay -clock clk 0.4 [copy_collection $prim_inputs]
+set_driving_cell -lib_cell NAND2X2_LVT -library saed32lvt_tt0p85v25c [copy_collection $prim_inputs]
+
+
+#############################
+# Don't touchy touchy rst_n #
+#############################
+set_dont_touch_network [find port RST_n]
+
+#########################################
+# Do output delay and capacitance stuff #
+#########################################
+set_output_delay -clock clk 0.4 [all_outputs]
+set_load 0.10 [all_outputs]
+
+#################################
+# Set max transition time stuff #
+#################################
+set_max_transition 0.15 [current_design]
+
+#######################
+# Set wire load model #
+#######################
+set_wire_load_model -name 16000 -library saed32lvt_tt0p85v25c
+
+##########################################
+# Do a cycle of compiling and flattening #
+##########################################
+compile -map_effort medium
+ungroup -all -flatten
+set_fix_hold clk
+compile -map_effort high
+
+##########################
+# Do reports and outputs #
+##########################
+report_timing -delay max > max.rpt
+report_timing -delay min > min.rpt
+report_area > area.rpt
+write -format verilog KnightsTour -output KnightsTour.vg
