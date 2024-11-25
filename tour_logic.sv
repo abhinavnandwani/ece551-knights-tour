@@ -57,6 +57,7 @@ module TourLogic(
       x_pos <= x_new;                             // Update x position
       y_pos <= y_new;                             // Update y position
       x_y_order[curr_move] <= {x_new[2:0], y_new[2:0]}; // Store the updated position
+      chosen_moves[curr_move] <= move;
       if (curr_move_move[0]) begin               // On successful move
         board[x_new][y_new] <= curr_move;         // Mark the new position as visited
         curr_move <= curr_move + 1;               // Increment the move index
@@ -93,7 +94,6 @@ module TourLogic(
           y_new = y_pos + 1;
           curr_move_move = 2'b01;
           next_state = 8'b00000001;  // Shift the state to the next move
-          chosen_moves[curr_move] = 8'b00000001;
           update_position <= 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
@@ -107,8 +107,7 @@ module TourLogic(
           y_new = y_pos + 2;
           curr_move_move = 2'b01;
           next_state = 8'b00000001;  // Shift the state to the next move
-          chosen_moves[curr_move] = 8'b00000010;
-          update_position <= 1'b1;
+          update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
           next_state = state << 1;
@@ -121,8 +120,7 @@ module TourLogic(
           y_new = y_pos + 2;
           curr_move_move = 2'b01;
           next_state = 8'b00000001;  // Shift the state to the next move
-          chosen_moves[curr_move] = 8'b00000100;
-          update_position <= 1'b1;
+          update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
           next_state = state << 1;
@@ -135,8 +133,7 @@ module TourLogic(
           y_new = y_pos + 1;
           curr_move_move = 2'b01;
           next_state = 8'b00000001;  // Shift the state to the next move
-          chosen_moves[curr_move] = 8'b00001000;
-          update_position <= 1'b1;
+          update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
           next_state = state << 1;
@@ -149,8 +146,7 @@ module TourLogic(
           y_new = y_pos - 1;
           curr_move_move = 2'b01;
           next_state = 8'b00000001;  // Shift the state to the next move
-          chosen_moves[curr_move] = 8'b00010000;
-          update_position <= 1'b1;
+          update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
           next_state = state << 1;
@@ -163,8 +159,7 @@ module TourLogic(
           y_new = y_pos - 2;
           curr_move_move = 2'b01;
           next_state = 8'b00000001;  // Shift the state to the next move
-          chosen_moves[curr_move] = 8'b00100000;
-          update_position <= 1'b1;
+          update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
           next_state = state << 1;
@@ -177,8 +172,7 @@ module TourLogic(
           y_new = y_pos - 2;
           curr_move_move = 2'b01;
           next_state = 8'b00000001;  // Shift the state to the next move
-          chosen_moves[curr_move] = 8'b01000000;
-          update_position <= 1'b1;
+          update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
           next_state = state << 1;
@@ -191,8 +185,7 @@ module TourLogic(
           y_new = y_pos - 1;
           curr_move_move = 2'b01;
           next_state = 8'b00000001;  // Shift the state to the next move
-          chosen_moves[curr_move] = 8'b10000000;
-          update_position <= 1'b1;
+          update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
           next_state = state << 1;
