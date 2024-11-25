@@ -8,7 +8,7 @@ module TourLogic(
 
   // Internal logic declarations
   logic [7:0] state, next_state;                  // Current and next states for the state machine
-  logic [4:0] board [4:0][4:0];                   // 5x5 board to track visited positions
+  logic board [4:0][4:0];                         // 5x5 board to track visited positions
   logic signed [7:0] chosen_moves [23:0];         // Array to store the chosen moves in a one-hot encoding
   logic [5:0] x_y_order [23:0];                   // Array to track the order of x, y positions visited
 
@@ -63,11 +63,11 @@ module TourLogic(
       x_y_order[curr_move] <= {x_new[2:0], y_new[2:0]}; // Store the updated position
       chosen_moves[curr_move] <= move;
       if (curr_move_move[0]) begin               // On successful move
-        board[x_new][y_new] <= curr_move;         // Mark the new position as visited
+        board[x_new][y_new] <= 1'b1;         // Mark the new position as visited
         curr_move <= curr_move + 1;               // Increment the move index
       end else if (curr_move_move[1]) begin       // On backtracking
         curr_move <= curr_move - 1;               // Decrement the move index
-        board[x_new][y_new] <= '0;                // Clear the board position
+        board[x_new][y_new] <= 1'b0;                // Clear the board position
       end
     end
   end
