@@ -12,7 +12,7 @@ module TourLogic(
   logic signed [7:0] chosen_moves [23:0];         // Array to store the chosen moves in a one-hot encoding
   logic [5:0] x_y_order [23:0];                   // Array to track the order of x, y positions visited
 
-  logic [7:0] curr_move;                          // Current move index
+  logic [4:0] curr_move;                          // Current move index
   logic signed [3:0] x_pos, y_pos;                // Current x and y positions
   logic signed [3:0] x_new, y_new;                // Updated x and y positions after a move
   logic [1:0] curr_move_move;                     // Control signal to advance or backtrack moves
@@ -47,13 +47,13 @@ module TourLogic(
       curr_move <= 5'h01;                         // Initialize move index
       for (int i = 0; i < 5; i++) begin
         for (int j = 0; j < 5; j++) begin
-          board[i][j] <= 5'b0;
+          board[i][j] <= '0;
         end
       end
       for (int i = 0; i < 24; i++) begin
-        chosen_moves[i] <= 8'sd0; // Use '8'sd0' for signed values
+        chosen_moves[i] <= '0; // Use '8'sd0' for signed values
       end
-      board[x_start][y_start] <= 5'b1;            // Mark the starting position as visited
+      board[x_start][y_start] <= 1'b1;            // Mark the starting position as visited
       x_y_order[0] <= {x_start, y_start};         // Store the starting position
       chosen_moves[curr_move] <= move;
     end else begin
