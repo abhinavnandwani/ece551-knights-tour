@@ -1,8 +1,8 @@
 ###########################################
 # Read Input Files and set Current Design #
 ###########################################
-read_file -format sverilog {MtrDrv.sv, PWM11.sv}
-set current_design MtrDrv
+read_file -format sverilog {UART_wrapper.sv, UART.v, UART_tx.sv, UART_rx.sv, PID.sv}
+set current_design UART_wrapper
 
 ################
 # Set up clock #
@@ -24,7 +24,7 @@ set_driving_cell -lib_cell NAND2X2_LVT -library saed32lvt_tt0p85v25c [copy_colle
 #############################
 # Don't touchy touchy rst_n #
 #############################
-set_dont_touch_network [find port rst_n]
+set_dont_touch_network [find port RST_n]
 
 #########################################
 # Do output delay and capacitance stuff #
@@ -53,7 +53,7 @@ compile -map_effort high
 ##########################
 # Do reports and outputs #
 ##########################
-report_timing -delay max > mtr_max.rpt
-report_timing -delay min > mtr_min.rpt
-report_area > mtr_area.rpt
-write -format verilog MtrDrv -output MtrDrv.vg
+report_timing -delay max > UART_max.rpt
+report_timing -delay UART_min > min.rpt
+report_area > UART_area.rpt
+write -format verilog UART_wrapper -output UART_wrapper.vg
