@@ -1,7 +1,7 @@
 ###########################################
 # Read Input Files and set Current Design #
 ###########################################
-read_file -format sverilog {UART_wrapper.sv, UART.v, UART_tx.sv, UART_rx.sv, PID.sv}
+read_file -format sverilog {UART_wrapper.sv, UART.v, UART_tx.sv, UART_rx.sv}
 set current_design UART_wrapper
 
 ################
