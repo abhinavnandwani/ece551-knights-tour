@@ -1,11 +1,8 @@
 ###########################################
 # Read Input Files and set Current Design #
 ###########################################
-read_file -format sverilog {KnightsTour.sv, rst_synch.sv, inert_intf.sv, \
-  inertial_integrator.sv, SPI.sv, TourLogic.sv, TourCmd.sv, sponge.sv, \
-  cmd_proc.sv, UART_wrapper.sv, UART.v, UART_tx.sv, UART_rx.sv, PID.sv, \
-  MtrDrv.sv, PWM11.sv, IR_intf.sv}
-set current_design KnightsTour
+read_file -format sverilog {MtrDrv.sv, PWM11.sv}
+set current_design MtrDrv
 
 ################
 # Set up clock #
@@ -27,7 +24,7 @@ set_driving_cell -lib_cell NAND2X2_LVT -library saed32lvt_tt0p85v25c [copy_colle
 #############################
 # Don't touchy touchy rst_n #
 #############################
-set_dont_touch_network [find port RST_n]
+set_dont_touch_network [find port rst_n]
 
 #########################################
 # Do output delay and capacitance stuff #
@@ -59,4 +56,4 @@ compile -map_effort high
 report_timing -delay max > max.rpt
 report_timing -delay min > min.rpt
 report_area > area.rpt
-write -format verilog KnightsTour -output KnightsTour.vg
+write -format verilog MtrDrv -output MtrDrv.vg
