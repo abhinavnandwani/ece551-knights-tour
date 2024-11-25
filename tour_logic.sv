@@ -45,13 +45,17 @@ module TourLogic(
       x_pos <= x_start;                           // Set starting x position
       y_pos <= y_start;                           // Set starting y position
       curr_move <= 5'h01;                         // Initialize move index
-      board <= '{'{5'b0, 5'b0, 5'b0, 5'b0, 5'b0},
-                  '{5'b0, 5'b0, 5'b0, 5'b0, 5'b0},
-                  '{5'b0, 5'b0, 5'b0, 5'b0, 5'b0},
-                  '{5'b0, 5'b0, 5'b0, 5'b0, 5'b0},
-                  '{5'b0, 5'b0, 5'b0, 5'b0, 5'b0}};
+      for (int i = 0; i < 5; i++) begin
+        for (int j = 0; j < 5; j++) begin
+          board[i][j] <= 5'b0;
+        end
+      end
+      for (int i = 0; i < 24; i++) begin
+        chosen_moves[i] <= 8'sd0; // Use '8'sd0' for signed values
+      end
       board[x_start][y_start] <= 5'b1;            // Mark the starting position as visited
       x_y_order[0] <= {x_start, y_start};         // Store the starting position
+      chosen_moves[curr_move] <= move;
     end else begin
       // Update current position and order arrays
       x_pos <= x_new;                             // Update x position
@@ -94,7 +98,7 @@ module TourLogic(
           y_new = y_pos + 1;
           curr_move_move = 2'b01;
           next_state = 8'b00000001;  // Shift the state to the next move
-          update_position <= 1'b1;
+          update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
           next_state = state << 1;
