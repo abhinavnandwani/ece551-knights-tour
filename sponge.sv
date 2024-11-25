@@ -15,7 +15,7 @@ module sponge(clk, rst_n, go, piezo, piezo_n);
   logic [23:0] timer;
   logic [14:0] duty_cycle;
   logic [14:0] desired_signal;
-  logic clr_timer, clr_frequency, go_calc; //, E7_counter, E7_counter_inc;
+  logic clr_timer, clr_frequency, go_calc;
   
   assign piezo_n = ~piezo; // Definition
   
@@ -63,14 +63,6 @@ module sponge(clk, rst_n, go, piezo, piezo_n);
 	  state <= nxt_state;
   end
   
-  // Create a ff to store E7_counter
-  /* always_ff@(posedge clk, negedge rst_n) begin
-    if (!rst_n)
-	  E7_counter <= 1'b0;
-	else if (E7_counter_inc)
-	  E7_counter <= 1'b1;
-  end */
-  
   // Create the state machines switching logic
   // This is a relatively complicated state machine, meant to play notes through
   // go_calc at the frequency desired_signal in the order D7, E7, F7, E7, F7, D7, A6, D7
@@ -81,7 +73,6 @@ module sponge(clk, rst_n, go, piezo, piezo_n);
 	clr_timer = 0;
 	clr_frequency = 0;
 	go_calc = 0;
-	//E7_counter_inc = 0;
 	case (state)
 	  IDLE: begin 
 	    clr_timer = 1;
@@ -114,7 +105,6 @@ module sponge(clk, rst_n, go, piezo, piezo_n);
 		if (timer[23]) begin
 		  clr_timer = 1;
 		  clr_frequency = 1;
-	      //E7_counter_inc = 1;
 	      nxt_state = E7_2;
 	    end
 	  end
@@ -133,7 +123,7 @@ module sponge(clk, rst_n, go, piezo, piezo_n);
 		if (timer[22]) begin
 		  clr_timer = 1;
 		  clr_frequency = 1;
-	      //E7_counter_inc = 1;
+		  clr_frequency = 1;
 	      nxt_state = D7_2;
 	    end
 	  end
