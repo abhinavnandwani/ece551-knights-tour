@@ -45,7 +45,11 @@ module TourLogic(
       x_pos <= x_start;                           // Set starting x position
       y_pos <= y_start;                           // Set starting y position
       curr_move <= 5'h01;                         // Initialize move index
-      board <= '{default: '{default: 5'b0}};      // Clear the visited board
+      board <= '{'{5'b0, 5'b0, 5'b0, 5'b0, 5'b0},
+                  '{5'b0, 5'b0, 5'b0, 5'b0, 5'b0},
+                  '{5'b0, 5'b0, 5'b0, 5'b0, 5'b0},
+                  '{5'b0, 5'b0, 5'b0, 5'b0, 5'b0},
+                  '{5'b0, 5'b0, 5'b0, 5'b0, 5'b0}};
       board[x_start][y_start] <= 5'b1;            // Mark the starting position as visited
       x_y_order[0] <= {x_start, y_start};         // Store the starting position
     end else begin
@@ -78,7 +82,8 @@ module TourLogic(
     x_new = x_pos;                                // Default new position
     y_new = y_pos;
     done = 1'b0;                                  // Default tour not done
-    update_position <= 1'b0;                      // Default no position update
+    update_position = 1'b0;                       // Default no position update
+    move = state;
 
     casex (state)
       8'bxxxxxxx1: begin                 // (2,1)
