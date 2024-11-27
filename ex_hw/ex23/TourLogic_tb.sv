@@ -49,7 +49,7 @@ module TourLogic_tb();
   // very helpful in debug. Perhaps your internal//
   // signal is called different than update_position //
   ////////////////////////////////////////////////
-  always @(negedge iDUT.update_position) begin: disp
+  always @(negedge iDUT.clk) begin: disp
     integer x,y;
 	for (y=4; y>=0; y--) begin
 	    $display("%2d  %2d  %2d  %2d  %2d\n",iDUT.board[0][y],iDUT.board[1][y],

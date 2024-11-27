@@ -1,164 +1,212 @@
 module TourLogic(
-    input logic clk, rst_n,               // 50MHz clock and async active low reset
-    input logic [2:0] x_start, y_start,   // Starting position of the knight
-    input logic go,                       // Start signal to begin the knight's tour
-    input logic [4:0] indx,               // Move index to retrieve specific move
-    output logic done,                    // Pulses high when the tour is complete
-    output logic [7:0] move               // The current move in one-hot encoding
+  input logic clk, rst_n, go,               // Clock, reset, and start signal inputs
+  input logic [2:0] x_start, y_start,      // Starting x and y coordinates
+  input logic [4:0] indx,                  // Index to track the moves
+  output logic done,                       // Signal indicating the knight's tour is complete
+  output logic [7:0] move                  // Output representing the current move in a one-hot vector
 );
 
-    // Internal signals and registers
-    logic [4:0] board[0:4][0:4];          // 5x5 board tracking visited positions
-    logic [7:0] last_move[0:23];          // Array storing the last move taken at each step
-    logic [7:0] poss_moves[0:23];         // Array storing possible moves at each step
-    logic [4:0] move_num;                 // Current move number (1 to 24)
-    logic [2:0] xx, yy;                   // Current knight position
-    logic [2:0] nxt_xx, nxt_yy;           // Next knight position
-    logic update_position,init;
+  // Internal logic declarations
+  logic [7:0] state, next_state;                  // Current and next states for the state machine
+  logic board [4:0][4:0];                         // 5x5 board to track visited positions
+  logic signed [7:0] chosen_moves [23:0];         // Array to store the chosen moves in a one-hot encoding
+  logic [5:0] x_y_order [23:0];                   // Array to track the order of x, y positions visited
 
-    // Knight's possible moves (delta values)
-    logic signed [2:0] dx[0:7], dy[0:7];
+  logic [4:0] curr_move;                          // Current move index
+  logic signed [3:0] x_pos, y_pos;                // Current x and y positions
+  logic signed [3:0] x_new, y_new;                // Updated x and y positions after a move
+  logic [1:0] curr_move_move;                     // Control signal to advance or backtrack moves
 
-    assign dx = {1,-1,-2,-2,-1,1,2,2};
-    assign dy = {2,2,1,-1,-2,-2,-1,1};
+  logic update_position;                          // Signal to indicate position update
 
-    // FSM states
-    typedef enum logic [2:0] {
-        IDLE, INIT, CALC_MOVES, SELECT_MOVE, UPDATE_POS, COMPLETE
-    } state_t;
-    state_t state, next_state;
+  // Function to check if a move is valid
+  function is_valid_move;
+    input signed [3:0] x;                         // Current x-coordinate
+    input signed [3:0] y;                         // Current y-coordinate
+    input signed [3:0] new_x;                     // New x-coordinate after the move
+    input signed [3:0] new_y;                     // New y-coordinate after the move
 
-    // State flop
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n)
-            state <= IDLE;
-        else
-            state <= next_state;
+    // Logic to validate the move
+    begin
+      if (new_x >= 4'd0 && new_x < 4'd5 &&        // Check if new_x is within board bounds
+          new_y >= 4'd0 && new_y < 4'd5 &&        // Check if new_y is within board bounds
+          board[new_x][new_y] == 0) begin         // Ensure the position is not already visited
+        is_valid_move = 1'b1;                     // Valid move
+      end else begin
+        is_valid_move = 1'b0;                     // Invalid move
+      end
     end
+  endfunction
 
-    // Function to calculate onward degree of a position
-    function automatic logic [3:0] calculate_degree(input logic [2:0] tmp_x, tmp_y);
-        logic [3:0] degree;
-        logic [2:0] new_x;
-        logic [2:0] new_y;
-        degree = 0;
-        for (int j = 0; j < 8; j++) begin
-             new_x = tmp_x + dx[j];
-             new_y = tmp_y + dy[j];
-            if (new_x >= 0 && new_x < 5 && new_y >= 0 && new_y < 5 && board[new_x][new_y] == 0)
-                degree++;
+  // Sequential block for updating stateful variables
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      // Reset all variables
+      x_pos <= x_start;                           // Set starting x position
+      y_pos <= y_start;                           // Set starting y position
+      curr_move <= 5'h01;                         // Initialize move index
+      for (int i = 0; i < 5; i++) begin
+        for (int j = 0; j < 5; j++) begin
+          board[i][j] <= '0;
         end
-        return degree;
-    endfunction
+      end
+      for (int i = 0; i < 24; i++) begin
+        chosen_moves[i] <= '0; // Use '8'sd0' for signed values
+      end
+      board[x_start][y_start] <= 1'b1;            // Mark the starting position as visited
+      x_y_order[0] <= {x_start, y_start};         // Store the starting position
+      chosen_moves[curr_move] <= move;
+    end else begin
+      // Update current position and order arrays
+      x_pos <= x_new;                             // Update x position
+      y_pos <= y_new;                             // Update y position
+      x_y_order[curr_move] <= {x_new[2:0], y_new[2:0]}; // Store the updated position
+      chosen_moves[curr_move] <= move;
+      if (curr_move_move[0]) begin               // On successful move
+        board[x_new][y_new] <= 1'b1;         // Mark the new position as visited
+        curr_move <= curr_move + 1;               // Increment the move index
+      end else if (curr_move_move[1]) begin       // On backtracking
+        curr_move <= curr_move - 1;               // Decrement the move index
+        board[x_new][y_new] <= 1'b0;                // Clear the board position
+      end
+    end
+  end
 
-    // move register 
-    always_ff@(posedge clk, negedge rst_n) begin
-        if (!rst_n) begin
-            xx <= 0;
-            yy <= 0;
-        end else if (init) begin
-            xx <= x_start;
-            yy <= y_start;
-        end else if (update_position) begin
-            xx <= nxt_xx;
-            yy <= nxt_yy;
+  // Sequential block for state machine logic
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) 
+      state <= 8'b00000001;                       // Reset to the initial state
+    else 
+      state <= next_state;                        // Move to the next state
+  end
+
+  // Combinational block for state transitions
+  always_comb begin
+    curr_move_move = 2'h0;                        // Default no move
+    next_state = state;                           // Default to current state
+    x_new = x_pos;                                // Default new position
+    y_new = y_pos;
+    done = 1'b0;                                  // Default tour not done
+    update_position = 1'b0;                       // Default no position update
+    move = state;
+
+    casex (state)
+      8'bxxxxxxx1: begin                 // (2,1)
+        if (is_valid_move(x_pos, y_pos, x_pos + 2, y_pos + 1)) begin
+          // Logic for handling the move (2, 1)
+          x_new = x_pos + 2;
+          y_new = y_pos + 1;
+          curr_move_move = 2'b01;
+          next_state = 8'b00000001;  // Shift the state to the next move
+          update_position = 1'b1;
+        end else begin
+          // No valid move, backtrack (shift state left)
+          next_state = state << 1;
         end
-    end
-
-    // move register 
-    always_ff@(posedge clk, negedge rst_n) begin
-        if (!rst_n) begin
-            for (int i = 0; i < 5; i++)
-                for (int j = 0; j < 5; j++)
-                    board[i][j] = 0;
-        end else if (init) begin
-            board[x_start][y_start] <= 5'h1;
-        end else if (update_position) begin
-            board[nxt_xx][nxt_yy] <= move_num + 1;
+      end
+      8'bxxxxxx10: begin                 // (1,2)
+        if (is_valid_move(x_pos, y_pos, x_pos + 1, y_pos + 2)) begin
+          // Logic for handling the move (1, 2)
+          x_new = x_pos + 1;
+          y_new = y_pos + 2;
+          curr_move_move = 2'b01;
+          next_state = 8'b00000001;  // Shift the state to the next move
+          update_position = 1'b1;
+        end else begin
+          // No valid move, backtrack (shift state left)
+          next_state = state << 1;
         end
-    end
-
-    
-
-        
-
-    // FSM next state and output logic
-    always_comb begin
-        // Default values
-        next_state = state;
-        done = 0;
-        update_position = 0;
-        init = 0;
-
-        case (state)
-            IDLE: begin
-                if (go) begin
-                    next_state = INIT;
-                end
-            end
-
-            INIT: begin
-                // Initialize board and position
-                init = 1'b1;
-                move_num = 1;
-                next_state = CALC_MOVES;
-            end
-
-            CALC_MOVES: begin
-                // Calculate all possible moves from the current position
-                poss_moves[move_num] = 0;
-                for (int i = 0; i < 8; i++) begin
-                    nxt_xx = xx + dx[i];
-                    nxt_yy = yy + dy[i];
-                    if (nxt_xx >= 0 && nxt_xx < 5 && nxt_yy >= 0 && nxt_yy < 5 && board[nxt_xx][nxt_yy] == 0) begin
-                        poss_moves[move_num][i] = 1;
-                    end
-                end
-                next_state = SELECT_MOVE;
-            end
-
-            SELECT_MOVE: begin
-                // Select the move with the lowest onward degree
-                logic [3:0] min_degree;
-                min_degree = 8;
-                for (int i = 0; i < 8; i++) begin
-                    if (poss_moves[move_num][i]) begin
-                        logic [3:0] degree;
-                        degree = calculate_degree(xx + dx[i], yy + dy[i]);
-                        if (degree <= min_degree) begin
-                            min_degree = degree;
-                            nxt_xx = xx + dx[i];
-                            nxt_yy = yy + dy[i];
-                        end
-                    end
-                end
-                next_state = UPDATE_POS;
-            end
-
-            UPDATE_POS: begin
-                // Update the board and position
-                last_move[move_num] = (1 << (nxt_xx * 5 + nxt_yy));
-                update_position = 1'b1;
-                move_num = move_num + 1;
-                if (move_num == 24) begin
-                    next_state = COMPLETE;
-                end else begin
-                    next_state = CALC_MOVES;
-                end
-            end
-
-            COMPLETE: begin
-                done = 1;
-                next_state = IDLE;
-            end
-
-            default: begin
-                next_state = IDLE;
-            end
-        endcase
-    end
-
-    // Output the move for the given index
-    assign move = last_move[indx];
-
+      end
+      8'bxxxxx100: begin                 // (-1,2)
+        if (is_valid_move(x_pos, y_pos, x_pos - 1, y_pos + 2)) begin
+          // Logic for handling the move (-1, 2)
+          x_new = x_pos - 1;
+          y_new = y_pos + 2;
+          curr_move_move = 2'b01;
+          next_state = 8'b00000001;  // Shift the state to the next move
+          update_position = 1'b1;
+        end else begin
+          // No valid move, backtrack (shift state left)
+          next_state = state << 1;
+        end
+      end
+      8'bxxxx1000: begin                 // (-2,1)
+        if (is_valid_move(x_pos, y_pos, x_pos - 2, y_pos + 1)) begin
+          // Logic for handling the move (-2, 1)
+          x_new = x_pos - 2;
+          y_new = y_pos + 1;
+          curr_move_move = 2'b01;
+          next_state = 8'b00000001;  // Shift the state to the next move
+          update_position = 1'b1;
+        end else begin
+          // No valid move, backtrack (shift state left)
+          next_state = state << 1;
+        end
+      end
+      8'bxxx10000: begin                 // (-2,-1)
+        if (is_valid_move(x_pos, y_pos, x_pos - 2, y_pos - 1)) begin
+          // Logic for handling the move (-2, -1)
+          x_new = x_pos - 2;
+          y_new = y_pos - 1;
+          curr_move_move = 2'b01;
+          next_state = 8'b00000001;  // Shift the state to the next move
+          update_position = 1'b1;
+        end else begin
+          // No valid move, backtrack (shift state left)
+          next_state = state << 1;
+        end
+      end
+      8'bxx100000: begin                 // (-1,-2)
+        if (is_valid_move(x_pos, y_pos, x_pos - 1, y_pos - 2)) begin
+          // Logic for handling the move (-1, -2)
+          x_new = x_pos - 1;
+          y_new = y_pos - 2;
+          curr_move_move = 2'b01;
+          next_state = 8'b00000001;  // Shift the state to the next move
+          update_position = 1'b1;
+        end else begin
+          // No valid move, backtrack (shift state left)
+          next_state = state << 1;
+        end
+      end
+      8'bx1000000: begin                 // (1,-2)
+        if (is_valid_move(x_pos, y_pos, x_pos + 1, y_pos - 2)) begin
+          // Logic for handling the move (1, -2)
+          x_new = x_pos + 1;
+          y_new = y_pos - 2;
+          curr_move_move = 2'b01;
+          next_state = 8'b00000001;  // Shift the state to the next move
+          update_position = 1'b1;
+        end else begin
+          // No valid move, backtrack (shift state left)
+          next_state = state << 1;
+        end
+      end
+      8'b10000000: begin                 // (2,-1)
+        if (is_valid_move(x_pos, y_pos, x_pos + 2, y_pos - 1)) begin
+          // Logic for handling the move (2, -1)
+          x_new = x_pos + 2;
+          y_new = y_pos - 1;
+          curr_move_move = 2'b01;
+          next_state = 8'b00000001;  // Shift the state to the next move
+          update_position = 1'b1;
+        end else begin
+          // No valid move, backtrack (shift state left)
+          next_state = state << 1;
+        end
+      end
+      default: begin
+        // Default case for backtracking if no valid move was found
+        // Reset the state and try the previous move
+        if (curr_move == 8'd24) begin
+          done = 1'b1;
+        end else begin
+          next_state = chosen_moves[curr_move-1] << 1;
+          x_new = {1'b0, x_y_order[curr_move-1][5:3]};
+          y_new = {1'b0, x_y_order[curr_move-1][2:0]};
+          curr_move_move = 2'b10;
+        end
+      end
+    endcase
+  end
 endmodule

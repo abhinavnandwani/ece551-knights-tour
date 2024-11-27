@@ -1,0 +1,21 @@
+I:/ece551/Project/team/knights-tour-551/ex_hw/ex23/TourLogic.sv {2 {vlog -work work -vopt -sv -stats=none I:/ece551/Project/team/knights-tour-551/ex_hw/ex23/TourLogic.sv
+** Warning: (vlog-14) Failed to open "I:/ece551/Project/team/knights-tour-551/ex_hw/ex23/modelsim/knightstour.mpf" specified by the MODELSIM environment variable.
+No such file or directory. (errno = ENOENT)
+Questa Intel Starter FPGA Edition-64 vlog 2023.3 Compiler 2023.07 Jul 17 2023
+-- Compiling module TourLogic
+
+Top level modules:
+	TourLogic
+
+} {} {}} I:/ece551/Project/team/knights-tour-551/ex_hw/ex23/TourLogic_tb.sv {2 {vlog -work work -vopt -sv -stats=none I:/ece551/Project/team/knights-tour-551/ex_hw/ex23/TourLogic_tb.sv
+** Warning: (vlog-14) Failed to open "I:/ece551/Project/team/knights-tour-551/ex_hw/ex23/modelsim/knightstour.mpf" specified by the MODELSIM environment variable.
+No such file or directory. (errno = ENOENT)
+Questa Intel Starter FPGA Edition-64 vlog 2023.3 Compiler 2023.07 Jul 17 2023
+** Warning: (vlib-14) Failed to open "I:/ece551/Project/team/knights-tour-551/ex_hw/ex23/modelsim/knightstour.mpf" specified by the MODELSIM environment variable.
+No such file or directory. (errno = ENOENT)
+-- Compiling module TourLogic_tb
+
+Top level modules:
+	TourLogic_tb
+
+} {} {}}
