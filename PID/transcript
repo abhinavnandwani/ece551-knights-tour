@@ -1,0 +1,60 @@
+# vsim -c -do "run -all; quit" PID_tb 
+# Start time: 02:13:40 on Dec 02,2024
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# //  Questa Sim
+# //  Version 2023.2_1 linux May 12 2023
+# //
+# //  Copyright 1991-2023 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.PID_tb(fast)
+# run -all
+# [0] Running Test Sequence: Stimulus and Response data:
+# [65] PASS: Left speed matches! Expected: xxx, GOT: xxx
+# [65] PASS: Right speed matches! Expected: xxx, GOT: xxx
+# [75] ERROR: Left speed mismatch! Expected: 011, GOT: xxx
+# [75] ERROR: Right speed mismatch! Expected: 3ff, GOT: xxx
+# [85] PASS: Left speed matches! Expected: 798, GOT: 798
+# [85] PASS: Right speed matches! Expected: 3ff, GOT: 3ff
+# [95] PASS: Left speed matches! Expected: 7f1, GOT: 7f1
+# [95] PASS: Right speed matches! Expected: 3ff, GOT: 3ff
+# [105] PASS: Left speed matches! Expected: 09b, GOT: 09b
+# [105] PASS: Right speed matches! Expected: 3ff, GOT: 3ff
+# [115] PASS: Left speed matches! Expected: 78a, GOT: 78a
+# [115] PASS: Right speed matches! Expected: 390, GOT: 390
+# [125] ERROR: Left speed mismatch! Expected: 706, GOT: 6b9
+# [125] ERROR: Right speed mismatch! Expected: 1c4, GOT: 211
+# [135] ERROR: Left speed mismatch! Expected: 1ea, GOT: 2a6
+# [135] ERROR: Right speed mismatch! Expected: 23a, GOT: 17e
+# [145] ERROR: Left speed mismatch! Expected: 2d9, GOT: 2d8
+# [145] ERROR: Right speed mismatch! Expected: 329, GOT: 32a
+# [155] ERROR: Left speed mismatch! Expected: 0e5, GOT: 0e4
+# [155] ERROR: Right speed mismatch! Expected: 135, GOT: 136
+# [165] ERROR: Left speed mismatch! Expected: 14e, GOT: 14d
+# [165] ERROR: Right speed mismatch! Expected: 19e, GOT: 19f
+# [175] ERROR: Left speed mismatch! Expected: 115, GOT: 114
+# [175] ERROR: Right speed mismatch! Expected: 165, GOT: 166
+# [185] PASS: Left speed matches! Expected: 3ff, GOT: 3ff
+# [185] ERROR: Right speed mismatch! Expected: 23f, GOT: 263
+# [195] PASS: Left speed matches! Expected: 3ff, GOT: 3ff
+# [195] ERROR: Right speed mismatch! Expected: 260, GOT: 2cc
+# [205] ERROR: Left speed mismatch! Expected: 3f6, GOT: 384
+# [205] ERROR: Right speed mismatch! Expected: 7fc, GOT: 06e
+# [215] ERROR: Left speed mismatch! Expected: 333, GOT: 331
+# [215] ERROR: Right speed mismatch! Expected: 659, GOT: 65b
+# [225] ERROR: Left speed mismatch! Expected: 2c4, GOT: 2c2
+# [225] ERROR: Right speed mismatch! Expected: 6c6, GOT: 6c8
+# Test sequence completed.
+# ** Note: $finish    : PID_tb.sv(104)
+#    Time: 325 ns  Iteration: 0  Instance: /PID_tb
+# End time: 02:13:40 on Dec 02,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0

@@ -48,7 +48,7 @@ module PID_tb;
       // Check if left speed matches expected value
       if (lft_spd_actual !== lft_spd_expected) begin
         $display("[%0t] ERROR: Left speed mismatch! Expected: %h, GOT: %h", $time, lft_spd_expected, lft_spd_actual);
-       // $stop();
+        $stop();
       end else begin
         $display("[%0t] PASS: Left speed matches! Expected: %h, GOT: %h", $time, lft_spd_expected, lft_spd_actual);
       end
@@ -56,7 +56,7 @@ module PID_tb;
       // Check if right speed matches expected value
       if (rght_spd_actual !== rght_spd_expected) begin
         $display("[%0t] ERROR: Right speed mismatch! Expected: %h, GOT: %h", $time, rght_spd_expected, rght_spd_actual);
-       // $stop();
+        $stop();
       end else begin
         $display("[%0t] PASS: Right speed matches! Expected: %h, GOT: %h", $time, rght_spd_expected, rght_spd_actual);
       end
@@ -78,10 +78,8 @@ module PID_tb;
     $display("[%0t] Running Test Sequence: Stimulus and Response data:", $time);
 
     // Loop through stimulus and check the corresponding response
-    for (int i = 0; i < 20; i++) begin
+    for (int i = 0; i < 2000; i++) begin
       @(negedge clk)  // Wait for the negative edge of the clock
-             @(negedge clk)
-                    @(negedge clk)
 
       // Apply stimulus values to the inputs
       rst_n = stim[i][24];        // Reset signal
@@ -90,17 +88,16 @@ module PID_tb;
       error = stim[i][21:10];     // Error value (12 bits)
       frwrd = stim[i][9:0];       // Forward signal (10 bits)
 
-      @(posedge clk)  // Wait for the positive edge of the clock
-      // Wait for a small time to ensure output stability
-       #1  
-
       // Expected output from the response data
       lft_spd_expected = resp[i][21:11];  // Expected left speed (11 bits)
       rght_spd_expected = resp[i][10:0];  // Expected right speed (11 bits)
 
+      @(posedge clk)  // Wait for the positive edge of the clock
+      #1  // Wait for a small time to ensure output stability
+
       // Call the check_output task to compare actual and expected values
       check_output(lft_spd, rght_spd, lft_spd_expected, rght_spd_expected);
-
+      // @(negedge clk)
     end
 
     // End simulation after checking all sets of stimulus/response
