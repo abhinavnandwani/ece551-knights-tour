@@ -123,9 +123,10 @@ module TourLogic(
 
     casex (state)
       8'hff : begin
-        if (go)
+        if (go) begin
           next_state = 8'h01;
           en = 1'b1;
+        end
       end
 
       8'bxxxxxxx1: begin                 // (2,1)
