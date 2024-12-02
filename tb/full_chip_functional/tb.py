@@ -6,6 +6,7 @@ This script automates the compilation and simulation of Verilog files.
 
 1. It compiles all Verilog source files in the specified src directory and the testbench file.
 2. It runs the simulation using the specified testbench file in command-line mode without optimization or coverage.
+3. Please ssh into the CAE machines before running the script
 
 The following are the main components:
 
@@ -15,6 +16,7 @@ The following are the main components:
 - run_simulation(): Function to run the simulation using ModelSim.
 
 Error handling: If compilation or simulation fails, the script will terminate with an error message.
+Run the script : python3 tb.py
 """
 
 # Path to the src directory containing Verilog source files
