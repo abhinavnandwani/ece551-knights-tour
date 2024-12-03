@@ -20,20 +20,20 @@ module TourCmd(
    // Update mv_indx: Clear, increment, or hold value
     //Need to add a flop because we only want it to increment once in the current clock cycle
     always_ff @(posedge clk) begin
-        if (clr_mv_indx)
+        unique if (clr_mv_indx)
             mv_indx <= 4'b0000;
         else 
             mv_indx <= mv_indx + inc_mv_indx;
     end
 
    // Generate response based on mv_indx
-   assign resp = (mv_indx == 5'd23) ? 8'hA5 : 8'h5A; // Response logic
+   assign resp = ((mv_indx == 5'd23) | send_resp) ? 8'hA5 : 8'h5A; // Response logic
 
    // Decode move to generate encoded_cmd
    logic [31:0] encoded_cmd;
    always_comb begin
        encoded_cmd = 0;
-       case (move)
+       unique case (move)
            8'b0000_0001 : encoded_cmd = {16'h4002,16'h5BF1}; // Move 0
            8'b0000_0010 : encoded_cmd = {16'h4002,16'h53F1}; // Move 1
            8'b0000_0100 : encoded_cmd = {16'h4001,16'h53F2}; // Move 2
@@ -42,6 +42,7 @@ module TourCmd(
            8'b0010_0000 : encoded_cmd = {16'h47F2,16'h5BF1}; // Move 5
            8'b0100_0000 : encoded_cmd = {16'h47F2,16'h5BF2}; // Move 6
            8'b1000_0000 : encoded_cmd = {16'h4001,16'h5BF2}; // Move 7
+           8'b1111_1111 : encoded_cmd = {16'hFFFF, 16'hFFFF}; //Idle
        endcase
    end
 
@@ -59,7 +60,7 @@ module TourCmd(
 
    // State transition logic
    always_ff @(posedge clk or negedge rst_n) begin
-       if (!rst_n)
+       unique if (!rst_n)
            state <= IDLE;
        else 
            state <= nxt_state;
@@ -105,8 +106,8 @@ module TourCmd(
            end
            default: begin
                nxt_state = IDLE;
+                clr_mv_indx = 1'b1;
                if (start_tour) begin
-                   clr_mv_indx = 1'b1;
                    nxt_state = VERTICAL;
                end
            end

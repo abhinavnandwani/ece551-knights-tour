@@ -19,6 +19,8 @@ module TourLogic(
 
   logic update_position,en;                          // Signal to indicate position update
 
+  assign move = chosen_moves[indx];
+
   // Function to check if a move is valid
   function is_valid_move;
     input signed [3:0] x;                         // Current x-coordinate
@@ -119,7 +121,7 @@ module TourLogic(
     done = 1'b0;                                  // Default tour not done
     en = 1'b0;
     update_position = 1'b0;                       // Default no position update
-    move = state;
+    //move = state;
 
     casex (state)
       8'hff : begin

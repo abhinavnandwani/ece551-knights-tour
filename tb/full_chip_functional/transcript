@@ -1,6 +1,6 @@
 # vsim -c -do "run -all; quit" KnightsTour_tb 
-# Start time: 05:45:52 on Dec 02,2024
-# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Start time: 10:14:10 on Dec 03,2024
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # //  Questa Sim
 # //  Version 2023.2_1 linux May 12 2023
 # //
@@ -18,15 +18,15 @@
 # Loading sv_std.std
 # Loading work.KnightsTour_tb(fast)
 # run -all
-# Duty cycle for left is at 50 percent at reset
-# Duty cycle for right is at 50 percent at reset
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ns  Iteration: 4  Process: /KnightsTour_tb/iDUT/iTC/#implicit#unique__36 File: ../../src/TourCmd.sv Line: 36
 # NEMO_setup asserted
 # cal_done asserted
-# Error should have changed
-# ** Note: $stop    : KnightsTour_tb.sv(161)
-#    Time: 2478530 ns  Iteration: 1  Instance: /KnightsTour_tb
-# Break at KnightsTour_tb.sv line 161
-# Stopped at KnightsTour_tb.sv line 161
+# Test passed for Latch Liberation front
+# ** Note: $stop    : KnightsTour_tb.sv(119)
+#    Time: 40314915 ns  Iteration: 2  Instance: /KnightsTour_tb
+# Break at KnightsTour_tb.sv line 119
+# Stopped at KnightsTour_tb.sv line 119
 #  quit
-# End time: 05:45:52 on Dec 02,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
+# End time: 10:14:12 on Dec 03,2024, Elapsed time: 0:00:02
+# Errors: 0, Warnings: 1
