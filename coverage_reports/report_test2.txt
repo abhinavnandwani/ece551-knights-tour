@@ -1,0 +1,203 @@
+Coverage Report Summary Data by file
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/IR_intf.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        28        28         0   100.00%
+    Conditions                       2         2         0   100.00%
+    Expressions                      6         6         0   100.00%
+    Statements                      41        41         0   100.00%
+    Toggles                        144       114        30    79.16%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/KnightPhysics.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                       114        35        79    30.70%
+    Conditions                      69        12        57    17.39%
+    Statements                      90        50        40    55.55%
+    Toggles                        522       488        34    93.48%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/KnightsTour.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Toggles                        288       218        70    75.69%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/MtrDrv.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Statements                       2         2         0   100.00%
+    Toggles                        100        95         5    95.00%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/PID.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        27        23         4    85.18%
+    Conditions                      14         6         8    42.85%
+    Expressions                      3         2         1    66.66%
+    Statements                      28        28         0   100.00%
+    Toggles                        582       535        47    91.92%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/PWM11.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                         2         2         0   100.00%
+    Expressions                      1         1         0   100.00%
+    Statements                       6         6         0   100.00%
+    Toggles                         54        53         1    98.14%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/RemoteComm.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        20        20         0   100.00%
+    Statements                      23        23         0   100.00%
+    Toggles                        110        71        39    64.54%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/SPI_iNEMO4.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        53        39        14    73.58%
+    Conditions                       2         2         0   100.00%
+    Expressions                      3         1         2    33.33%
+    Statements                      84        60        24    71.42%
+    Toggles                        178       156        22    87.64%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/SPI_mnrch.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        30        30         0   100.00%
+    Expressions                      2         2         0   100.00%
+    Statements                      37        37         0   100.00%
+    Toggles                        150       137        13    91.33%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/TourCmd.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        36        10        26    27.77%
+    Conditions                       3         1         2    33.33%
+    Expressions                      3         1         2    33.33%
+    Statements                      46        20        26    43.47%
+    Toggles                        244        75       169    30.73%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/TourLogic.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        50        11        39    22.00%
+    Conditions                       6         0         6     0.00%
+    Statements                      96        21        75    21.87%
+    Toggles                        128        15       113    11.71%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/UART.v
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Toggles                         48        47         1    97.91%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/UART_rx.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        27        27         0   100.00%
+    Conditions                       7         6         1    85.71%
+    Expressions                      1         1         0   100.00%
+    Statements                      33        33         0   100.00%
+    Toggles                        118       109         9    92.37%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/UART_tx.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        24        24         0   100.00%
+    Conditions                       5         5         0   100.00%
+    Expressions                      1         1         0   100.00%
+    Statements                      31        31         0   100.00%
+    Toggles                         88        87         1    98.86%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/UART_wrapper.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        15        15         0   100.00%
+    Statements                      22        22         0   100.00%
+    Toggles                        108        89        19    82.40%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/cmd_proc.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        47        42         5    89.36%
+    Conditions                       3         1         2    33.33%
+    Expressions                      7         7         0   100.00%
+    Statements                      62        59         3    95.16%
+    Toggles                        268       157       111    58.58%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/inert_intf.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        27        27         0   100.00%
+    Statements                      37        37         0   100.00%
+    Toggles                        218       201        17    92.20%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/inertial_integrator.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        34        31         3    91.17%
+    Conditions                       9         3         6    33.33%
+    Expressions                      1         1         0   100.00%
+    Statements                      50        47         3    94.00%
+    Toggles                        398       274       124    68.84%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/rst_synch.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                         2         2         0   100.00%
+    Statements                       5         5         0   100.00%
+    Toggles                          8         5         3    62.50%
+
+=================================================================================
+=== File: /filespace/y/yellapuntula/ece551/testSUite/sponge.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        40        17        23    42.50%
+    Conditions                       6         2         4    33.33%
+    Statements                      65        27        38    41.53%
+    Toggles                        142        81        61    57.04%
+
+
+TOTAL ASSERTION COVERAGE: 100.00%  ASSERTIONS: 2
+
+Total Coverage By File (code coverage only, filtered view): 65.99%
+
