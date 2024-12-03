@@ -1,8 +1,8 @@
 /**
-*This module tests the behavior of cntrIR and if the knight obeys the move command sent through the bluetooth module properly
+*This module tests if the left and right guardrails are working properly
 */
 
-module KnightsTour_tb2();
+module KnightsTour_tb3();
 
     localparam FAST_SIM = 1;
     
@@ -50,14 +50,17 @@ module KnightsTour_tb2();
                         .rghtPWM1(rghtPWM1),.rghtPWM2(rghtPWM2),.IR_en(IR_en),
                         .lftIR_n(lftIR_n),.rghtIR_n(rghtIR_n),.cntrIR_n(cntrIR_n)); 
 
-    logic [1:0] count; //COunt variable to keep track of cntrIr rise
+    logic [2:0] countCntr;
+    logic [1:0] countLft, countRght;
 
     always begin
         clk = 0;
         RST_n = 0;
         cmd = 16'h0000;
         send_cmd = 0;
-        count = 0;
+        countCntr = 0;
+        countLft = 0;
+        countRght = 0;
         
         @(negedge clk);
         RST_n = 1;
@@ -100,13 +103,55 @@ module KnightsTour_tb2();
         send_cmd = 1;
 
         @(negedge clk);
+        send_cmd = 0; 
+
+        //Wait and then send a cmd to move north by 2 squares
+        //While waiting make sure the left and right guardrails are not asserted
+        
+        fork
+            begin
+                repeat (150000) @(negedge clk);
+                disable monitorLft;
+                disable monitorRght;
+                $display("Left and Right guardrails successfully remained deasserted throughout");
+            end
+            begin:monitorRght
+                @(posedge iDUT.rghtIR);
+                $display("right guardrail should not have asserted");
+                $stop();
+            end
+            begin: monitorLft
+                @(posedge iDUT.lftIR);
+                $display("left guardrail should not have asserted");
+                $stop();
+            end
+        join
+
+        cmd = 16'h5002;  //2 squares north command
+        send_cmd = 1;
+
+        @(negedge clk);
         send_cmd = 0;
 
         fork 
+            begin:CountLftIRrise
+                while (countLft >= 0) begin
+                    @(posedge iDUT.lftIR);
+                    countLft = countLft + 1;
+                    @(negedge clk);
+                end
+            end
+            begin:CountRghtIRrise
+                while (countRght >= 0) begin
+                    @(posedge iDUT.rghtIR);
+                    countRght= countRght + 1;
+                    @(negedge clk);
+                end
+            end
             begin:CountCntrIRrise
-                while (count >= 0) begin
+                while (countCntr >= 0) begin
                     @(posedge iDUT.iCMD.cntrIR);
-                    count = count + 1;
+                    countCntr = countCntr + 1;
                     @(negedge clk);
                 end
             end
@@ -115,9 +160,11 @@ module KnightsTour_tb2();
                 $display("Timed out waiting for resp_rdy");
             end
             begin
-                @(posedge resp_rdy);
+                repeat (2) @(posedge resp_rdy);
                 disable timeoutRespRdy;
                 disable CountCntrIRrise;
+                disable CountLftIRrise;
+                disable CountRghtIRrise;
                 assert (resp == 8'hA5) $display("Positive acknowledgement received");
                 else begin
                     $display("Positive acknowledgement not received");
@@ -125,16 +172,29 @@ module KnightsTour_tb2();
                 end
             end
         join
-
-        assert (count == 2'b10) $display("cntrIR rose 2 times");
+        
+        //Make sure the expected behavior was observed from the guardrails
+        assert (countCntr == 3'b110) $display("cntrIR rose 6 times");
         else begin
-            $display("Mistake: cntrIR rose %d times", count);
+            $display("Mistake: cntrIR rose %d times in north", countCntr);
             $stop();
         end
 
-        repeat (150000) @(negedge clk); //observe
+        assert (countLft == 2'b10) $display("cntrIR rose 4 times");
+        else begin
+            $display("Mistake: lftIR rose %d times in north", countLft);
+            $stop();
+        end
 
-        $display("Test passed for Latch Liberation front");
+        assert (countRght== 2'b01) $display("cntrIR rose 4 times");
+        else begin
+            $display("Mistake: rghtIR rose %d times in north", countLft);
+            $stop();
+        end
+
+        repeat (1000000) @(negedge clk); //observe
+
+        $display("Tests done for latch liberation front");
         $stop();
     end
 

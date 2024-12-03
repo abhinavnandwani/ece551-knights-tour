@@ -1,3 +1,7 @@
+/**
+*This module tests if the basic functions of the signals are implemented properly
+*/
+
 module KnightsTour_tb1();
 
   localparam FAST_SIM = 1;
@@ -36,7 +40,7 @@ module KnightsTour_tb1();
   // Instantiate RemoteComm to send commands to DUT //
   ///////////////////////////////////////////////////
   RemoteComm iRMT(.clk(clk), .rst_n(RST_n), .RX(RX_TX), .TX(TX_RX), .cmd(cmd),
-             .snd_cmd(send_cmd), .cmd_snt(cmd_sent), .resp_rdy(resp_rdy), .resp(resp));
+                .snd_cmd(send_cmd), .cmd_snt(cmd_sent), .resp_rx_rdy(resp_rdy), .resp_rx_data(resp), .resp_clr_rx_rdy());
 				   
   //////////////////////////////////////////////////////
   // Instantiate model of Knight Physics (and board) //
