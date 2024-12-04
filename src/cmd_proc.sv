@@ -56,10 +56,8 @@ module cmd_proc(
     logic [3:0] desired_squares;
 
     // Number of squares to move //
-    always_ff @(posedge clk or negedge rst_n) 
-        if (!rst_n)
-            desired_squares <= 0;
-        else if (move_cmd)
+    always_ff @(posedge clk) 
+         if (move_cmd)
             desired_squares <= {cmd[2:0], 1'b0};
     
 
@@ -145,6 +143,7 @@ module cmd_proc(
         inc_frwrd = 0;
         dec_frwrd = 0;
         moving = 0;
+        tour_go = 0;
         send_resp = 0;
         nxt_state = state;
 
@@ -184,6 +183,7 @@ module cmd_proc(
                 4'b0010: begin nxt_state = CALIBRATE; strt_cal = 1'b1; end
                 4'b010x: begin nxt_state = MOVE_I; move_cmd = 1'b1; end
                 4'b0110: tour_go = 1'b1; // Hand off to tour module
+                
                 default: nxt_state = state; // alpha particle collision handling
                 endcase
             end

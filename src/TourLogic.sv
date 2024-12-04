@@ -41,31 +41,36 @@ module TourLogic(
   endfunction
 
   // Sequential block for resetting x_pos and y_pos
-  always_ff @(posedge clk or negedge rst_n) begin
-      if (en) begin
+  always_ff @(posedge clk, negedge rst_n) begin
+      if (!rst_n) begin
+        x_pos <= 0;
+        y_pos <= 0;
+      end else begin
+          if (en) begin
           x_pos <= x_start;                           // Set starting x position
           y_pos <= y_start;                           // Set starting y position
       end else begin
           x_pos <= x_new;                             // Update x position
           y_pos <= y_new;                             // Update y position
       end
+      end
   end
 
   // Sequential block for resetting curr_move
-  always_ff @(posedge clk or negedge rst_n) begin
+  always_ff @(posedge clk) begin
       if (en) begin
           curr_move <= 5'h01;                         // Initialize move index
       end else begin
           if (curr_move_move[0]) begin               // On successful move
               curr_move <= curr_move + 1;           // Increment the move index
           end else if (curr_move_move[1]) begin     // On backtracking
-              curr_move <= curr_move - 1;           // Decrement the move index
+              curr_move <= curr_move - 1'b1;           // Decrement the move index
           end
       end
   end
 
   // Sequential block for resetting and updating board
-  always_ff @(posedge clk or negedge rst_n) begin
+  always_ff @(posedge clk) begin
       if (en) begin
           for (int i = 0; i < 5; i++) begin
               for (int j = 0; j < 5; j++) begin
@@ -83,7 +88,7 @@ module TourLogic(
   end
 
   // Sequential block for resetting and updating x_y_order
-  always_ff @(posedge clk or negedge rst_n) begin
+  always_ff @(posedge clk) begin
       if (en) begin
           x_y_order[0] <= {x_start, y_start};         // Store the starting position
       end else begin
@@ -92,20 +97,20 @@ module TourLogic(
   end
 
   // Sequential block for resetting and updating chosen_moves
-  always_ff @(posedge clk or negedge rst_n) begin
+  always_ff @(posedge clk) begin
       if (en) begin
           for (int i = 0; i < 24; i++) begin
               chosen_moves[i] <= '0;                 // Reset chosen moves
           end
-          chosen_moves[curr_move] <= move;
+          chosen_moves[curr_move] <= state;
       end else begin
-          chosen_moves[curr_move] <= move;
+          chosen_moves[curr_move] <= state;
       end
   end
   
 
   // Sequential block for state machine logic
-  always_ff @(posedge clk or negedge rst_n) begin
+  always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) 
       state <= 8'hff;                       // Reset to the initial state
     else 

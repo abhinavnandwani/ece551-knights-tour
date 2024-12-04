@@ -22,8 +22,8 @@ module TourCmd(
     always_ff @(posedge clk) begin
          if (clr_mv_indx)
             mv_indx <= 4'b0000;
-        else if (inc_mv_indx)
-            mv_indx <= mv_indx + 1;
+        else 
+            mv_indx <= mv_indx + inc_mv_indx;
     end
 
    // Generate response based on mv_indx
