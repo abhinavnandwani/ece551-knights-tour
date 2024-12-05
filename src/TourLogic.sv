@@ -9,12 +9,12 @@ module TourLogic(
   // Internal logic declarations
   logic [7:0] state, next_state;                  // Current and next states for the state machine
   logic board [4:0][4:0];                         // 5x5 board to track visited positions
-  logic signed [7:0] chosen_moves [23:0];         // Array to store the chosen moves in a one-hot encoding
+  logic [7:0] chosen_moves [23:0];         // Array to store the chosen moves in a one-hot encoding
   logic [5:0] x_y_order [23:0];                   // Array to track the order of x, y positions visited
 
   logic [4:0] curr_move;                          // Current move index
-  logic signed [3:0] x_pos, y_pos;                // Current x and y positions
-  logic signed [3:0] x_new, y_new;                // Updated x and y positions after a move
+  logic [3:0] x_pos, y_pos;                // Current x and y positions
+  logic [3:0] x_new, y_new;                // Updated x and y positions after a move
   logic [1:0] curr_move_move;                     // Control signal to advance or backtrack moves
 
   logic update_position,en;                          // Signal to indicate position update
@@ -23,10 +23,10 @@ module TourLogic(
 
   // Function to check if a move is valid
   function is_valid_move;
-    input signed [3:0] x;                         // Current x-coordinate
-    input signed [3:0] y;                         // Current y-coordinate
-    input signed [3:0] new_x;                     // New x-coordinate after the move
-    input signed [3:0] new_y;                     // New y-coordinate after the move
+    input [3:0] x;                         // Current x-coordinate
+    input [3:0] y;                         // Current y-coordinate
+    input [3:0] new_x;                     // New x-coordinate after the move
+    input [3:0] new_y;                     // New y-coordinate after the move
 
     // Logic to validate the move
     begin
@@ -59,7 +59,7 @@ module TourLogic(
   // Sequential block for resetting curr_move
   always_ff @(posedge clk) begin
       if (en) begin
-          curr_move <= 5'h01;                         // Initialize move index
+          curr_move <= 5'h0;                         // Initialize move index
       end else begin
           if (curr_move_move[0]) begin               // On successful move
               curr_move <= curr_move + 1;           // Increment the move index

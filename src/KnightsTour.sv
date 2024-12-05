@@ -78,6 +78,12 @@ module KnightsTour(
               .mv_indx(mv_indx),.cmd(cmd),.cmd_UART(cmd_UART),.cmd_rdy(cmd_rdy),
 			  .cmd_rdy_UART(cmd_rdy_UART),.clr_cmd_rdy(clr_cmd_rdy),
 			  .send_resp(send_resp), .resp(resp));				
+
+  always @(posedge send_resp) begin
+
+    $display("mv_indx : %h",move);
+    
+  end
  
   /////////////////////////////////////
   // Instantiate inertial interface //

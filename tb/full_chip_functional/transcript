@@ -1,6 +1,6 @@
-# vsim -c -do "run -all; quit" KnightsTour_tb 
-# Start time: 10:45:55 on Dec 04,2024
-# ** Note: (vsim-3812) Design is being optimized...
+# vsim -c -do "run -all; quit" TourLogic_tb 
+# Start time: 05:44:33 on Dec 05,2024
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # //  Questa Sim
 # //  Version 2023.2_1 linux May 12 2023
 # //
@@ -16,19 +16,117 @@
 # //  18 U.S.C. Section 1905.
 # //
 # Loading sv_std.std
-# Loading work.KnightsTour_tb(fast)
+# Loading work.TourLogic_tb(fast)
 # run -all
-# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
-#    Time: 0 ns  Iteration: 4  Process: /KnightsTour_tb/iDUT/iTC/#implicit#unique__36 File: ../../src/TourCmd.sv Line: 36
-# NEMO_setup asserted
-# cal_done asserted
-# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
-#    Time: 3234115 ns  Iteration: 3  Process: /KnightsTour_tb/iDUT/iTC/#implicit#unique__36 File: ../../src/TourCmd.sv Line: 36
-# Tests done for latch liberation front
-# ** Note: $stop    : KnightsTour_tb.sv(111)
-#    Time: 1002726060 ns  Iteration: 1  Instance: /KnightsTour_tb
-# Break at KnightsTour_tb.sv line 111
-# Stopped at KnightsTour_tb.sv line 111
+# SUCCESS: Solution found starting at x=0, y=0.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=2, y=0.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=4, y=0.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=1, y=1.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=3, y=1.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=0, y=2.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=2, y=2.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=4, y=2.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=1, y=3.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=3, y=3.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=0, y=4.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=2, y=4.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# SUCCESS: Solution found starting at x=4, y=4.
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+#  1   1   1   1   1  
+# --------------------
+# 
+# INFO: Testbench completed for all black squares.
+# ** Note: $stop    : TourLogic_tb.sv(88)
+#    Time: 11416965 ns  Iteration: 4  Instance: /TourLogic_tb
+# Break at TourLogic_tb.sv line 88
+# Stopped at TourLogic_tb.sv line 88
 #  quit
-# End time: 10:46:43 on Dec 04,2024, Elapsed time: 0:00:48
-# Errors: 0, Warnings: 2
+# End time: 05:44:34 on Dec 05,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0

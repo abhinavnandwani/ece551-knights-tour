@@ -23,7 +23,7 @@ Run the script : python3 tb.py
 SRC_DIR = "../../src"
 
 # Testbench file in the same directory as this script
-TESTBENCH_FILE = "KnightsTour_tb.sv"  # Testbench file in the same folder as the script
+TESTBENCH_FILE = "TourLogic_tb.sv"  # Testbench file in the same folder as the script
 
 # Compile the design and testbench files
 def compile_verilog_files():
@@ -39,7 +39,7 @@ def compile_verilog_files():
 # Run the simulation without optimization and without coverage
 def run_simulation():
     # Specify the testbench module to run
-    testbench_module = "KnightsTour_tb"
+    testbench_module = "TourLogic_tb"
     try:
         # Run the simulation using the vsim command with no optimization or coverage
         subprocess.run([

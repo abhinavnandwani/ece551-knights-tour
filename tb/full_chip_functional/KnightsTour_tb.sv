@@ -105,7 +105,9 @@ module KnightsTour_tb();
         @(negedge clk);
         send_cmd = 0; 
 
-        repeat (100000000) @(negedge clk); //observe
+        // check for proper handing off to tour cmd //
+
+        repeat(49) @(posedge iDUT.iTC.send_resp);
 
         $display("Tests done for latch liberation front");
         $stop();
