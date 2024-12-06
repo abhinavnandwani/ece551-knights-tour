@@ -2,7 +2,7 @@
 *This module tests the tour logic 
 */
 
-module KnightsTour_tb4();
+module KnightsTour_tb5();
 
     localparam FAST_SIM = 1;
     
@@ -52,11 +52,12 @@ module KnightsTour_tb4();
 
     logic [2:0] countCntr;
     logic [1:0] countLft, countRght;
-    int i, j;
+    int i, j, k,h;
     logic [7:0] val;
     logic [7:0] cM [23:0];
     logic b[4:0][4:0];
     logic [4:0] count;
+    logic [3:0] partCMD1, partCMD2;
 
     always begin
         clk = 0;
@@ -102,44 +103,50 @@ module KnightsTour_tb4();
                 $display("cal_done asserted");
             end
         join
-        @(posedge resp_rdy);
-        @(negedge clk);
 
-        cmd = 16'h6000;
-        send_cmd = 1;
+        for (int k = 0; k < 5; k= k+2) begin
+            for (int h = 0; h < 5; h = h+2) begin
+                @(posedge resp_rdy);
+                @(negedge clk);
+                partCMD1 = k;
+                partCMD2 = h;
+                cmd = {8'h60, partCMD1, partCMD2};
+                $display("%d %d %h", k,h,cmd);
+                send_cmd = 1;
 
-        @(negedge clk);
-        send_cmd = 0; 
+                @(negedge clk);
+                send_cmd = 0; 
 
-        // check for proper handing off to tour cmd //
+                // check for proper handing off to tour cmd //
 
-        repeat(49) @(posedge iDUT.iTC.send_resp);
-        cM = iDUT.iTL.chosen_moves;
-        b = iDUT.iTL.board;
-        $display("-----------");
+                repeat(49) @(posedge iDUT.iTC.send_resp);
+                cM = iDUT.iTL.chosen_moves;
+                b = iDUT.iTL.board;
+                $display("-----------");
 
-        for (int i = 0; i < 24; i++) begin
-            val = 8'h00;
-            for (int j = 0; j< 8; j++) begin
-                val = {val, cM[i][j]};
-            end
-            $display("%d : %h", i, val);
-        end
+                for (int i = 0; i < 24; i++) begin
+                    val = 8'h00;
+                    for (int j = 0; j< 8; j++) begin
+                        val = {val, cM[i][j]};
+                    end
+                    $display("%d : %h", i, val);
+                end
 
-        for (int i= 0; i < 5 ;i++) begin
-            for (int j = 0; j < 5; j++) begin
-                if (b[i][j] == 1) begin
-                    count = count + 1;
+                for (int i= 0; i < 5 ;i++) begin
+                    for (int j = 0; j < 5; j++) begin
+                        if (b[i][j] == 1) begin
+                            count = count + 1;
+                        end
+                    end
+                end
+
+                assert (count == 5'd25) $display("All squares were visited");
+                else begin
+                    $display("%d squares were visited", count);
+                    $stop();
                 end
             end
         end
-
-        assert (count == 5'd25) $display("All squares were visited");
-        else begin
-            $display("%d squares were visited", count);
-            $stop();
-        end
-
         $display("Tests done for latch liberation front");
         $stop();
     end
@@ -147,3 +154,4 @@ module KnightsTour_tb4();
     always 
         #5 clk <= ~clk;
 endmodule
+

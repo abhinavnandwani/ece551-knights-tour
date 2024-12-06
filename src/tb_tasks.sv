@@ -114,7 +114,26 @@ package tb_tasks;
 
 
 
-    // task 6 : transmission with BLE //
+    // task 6 : Heading converging or not//
+    logic [11:0] diff;
+    task automatic checkConvHeading(ref [12:0] desiredHeading, [11:0] heading);
+        diff = desiredHeading[11:0] - heading;
+        if (diff[11]) begin
+            if ((~diff) + 1 > 12'h064) begin
+                $display("Heading has not converged to the expected value");
+                $stop();
+            end
+        end
+        else begin
+            if (diff > 12'h064) begin
+                $display("Heading has not converged to the expected value");
+                $stop();
+            end
+        end
+        $display("Heading has converged at %h", heading); 
+    endtask
+
+
 endpackage
 
 

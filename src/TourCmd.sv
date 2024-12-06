@@ -38,14 +38,15 @@ module TourCmd(
    always_comb begin
        encoded_cmd = 0;
         case (move)
-           8'b0000_0001 : encoded_cmd = {16'h4002,16'h5BF1}; // Move 0
-           8'b0000_0010 : encoded_cmd = {16'h4002,16'h53F1}; // Move 1
-           8'b0000_0100 : encoded_cmd = {16'h4001,16'h53F2}; // Move 2
-           8'b0000_1000 : encoded_cmd = {16'h47F1,16'h53F2}; // Move 3
-           8'b0001_0000 : encoded_cmd = {16'h47F2,16'h53F1}; // Move 4
-           8'b0010_0000 : encoded_cmd = {16'h47F2,16'h5BF1}; // Move 5
-           8'b0100_0000 : encoded_cmd = {16'h47F2,16'h5BF2}; // Move 6
-           8'b1000_0000 : encoded_cmd = {16'h4001,16'h5BF2}; // Move 7
+					// VERTICAL, HORIZONTAL		X, Y
+           8'b0000_0001 : encoded_cmd = {16'h4001,16'h5BF2}; // Move 0 (2, 1)
+           8'b0000_0010 : encoded_cmd = {16'h4002,16'h5BF1}; // Move 1 (1,2)
+           8'b0000_0100 : encoded_cmd = {16'h4002,16'h53F1}; // Move 2 (-1,2)
+           8'b0000_1000 : encoded_cmd = {16'h4001,16'h53F2}; // Move 3 (-2,1)
+           8'b0001_0000 : encoded_cmd = {16'h47F1,16'h53F2}; // Move 4 (-2, -1)
+           8'b0010_0000 : encoded_cmd = {16'h47F2,16'h53F1}; // Move 5 (-1, -2)
+           8'b0100_0000 : encoded_cmd = {16'h47F2,16'h5BF1}; // Move 6 (1, -2)
+           8'b1000_0000 : encoded_cmd = {16'h47F1,16'h5BF2}; // Move 7 (2, -1)
            8'b1111_1111 : encoded_cmd = {16'hFFFF, 16'hFFFF}; //Idle
        endcase
    end
