@@ -134,6 +134,38 @@ package tb_tasks;
     endtask
 
 
+    
+    task automatic verifyCoordinates(
+    	input logic [14:0] expected_x,
+    	input logic [14:0] expected_y,
+    	input logic [14:0] xx,
+    	input logic [14:0] yy
+    );
+    	// Define the range as +/- 0.5 * 4096
+    	localparam signed [14:0] tolerance = 15'd2048;
+
+    	// Print the expected and actual coordinates
+    	$display("Verifying Coordinates at time %0t", $time);
+    	$display("Expected X: %0d, Y: %0d", expected_x, expected_y);
+    	$display("Actual   X: %0d, Y: %0d", xx, yy);
+
+    	// Check X coordinate
+    	if ((xx < (expected_x - tolerance)) || (xx > (expected_x + tolerance))) begin
+        	$error("X coordinate out of range: Expected [%0d ± %0d], Got %0d at time %0t",
+            	expected_x, tolerance, xx, $time);
+   	 end else begin
+        	$display("X coordinate is within the expected range.");
+    	end
+
+    	// Check Y coordinate
+    	if ((yy < (expected_y - tolerance)) || (yy > (expected_y + tolerance))) begin
+        	$error("Y coordinate out of range: Expected [%0d ± %0d], Got %0d at time %0t",
+            	expected_y, tolerance, yy, $time);
+    	end else begin
+     	   	$display("Y coordinate is within the expected range.");
+    	end
+    endtask
+
 endpackage
 
 
