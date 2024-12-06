@@ -12,6 +12,10 @@ module TourCmd(
    output logic [7:0] resp            // Response: 0xA5 (done) or 0x5A (in progress)
 );
 
+    logic en_cmd_mux;           // Control source selection for cmd and cmd_rdy
+   logic cmd_rdy_SM;           // Ready signal from FSM
+   logic [15:0] cmd_SM;               // Command signal from FSM
+
    // Signals to control mv_indx
    logic inc_mv_indx;          // Increment mv_indx when cmd_proc completes
    logic clr_mv_indx;          // Clear mv_indx when start_tour is asserted
@@ -27,7 +31,7 @@ module TourCmd(
     end
 
    // Generate response based on mv_indx
-   assign resp = ((mv_indx == 5'd23) | send_resp) ? 8'hA5 : 8'h5A; // Response logic
+   assign resp = ((mv_indx == 5'd23) | (~(en_cmd_mux))) ? 8'hA5 : 8'h5A; // Response logic
 
    // Decode move to generate encoded_cmd
    logic [31:0] encoded_cmd;
@@ -47,9 +51,7 @@ module TourCmd(
    end
 
    // Mux logic for cmd and cmd_rdy
-   logic en_cmd_mux;           // Control source selection for cmd and cmd_rdy
-   logic cmd_rdy_SM;           // Ready signal from FSM
-   logic [15:0] cmd_SM;               // Command signal from FSM
+   
 
    assign cmd_rdy = en_cmd_mux ? cmd_rdy_SM : cmd_rdy_UART;
    assign cmd = en_cmd_mux ? cmd_SM : cmd_UART;
