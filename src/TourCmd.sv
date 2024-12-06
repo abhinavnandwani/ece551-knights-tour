@@ -12,8 +12,7 @@ module TourCmd(
    output logic [7:0] resp            // Response: 0xA5 (done) or 0x5A (in progress)
 );
 
-   // Mux logic for cmd and cmd_rdy
-   logic en_cmd_mux;           // Control source selection for cmd and cmd_rdy
+    logic en_cmd_mux;           // Control source selection for cmd and cmd_rdy
    logic cmd_rdy_SM;           // Ready signal from FSM
    logic [15:0] cmd_SM;               // Command signal from FSM
 
@@ -25,10 +24,10 @@ module TourCmd(
    // Update mv_indx: Clear, increment, or hold value
     //Need to add a flop because we only want it to increment once in the current clock cycle
     always_ff @(posedge clk) begin
-        unique if (clr_mv_indx)
+         if (clr_mv_indx)
             mv_indx <= 4'b0000;
-        else 
-            mv_indx <= mv_indx + inc_mv_indx;
+        else if (inc_mv_indx)
+            mv_indx <= mv_indx + 1;
     end
 
    // Generate response based on mv_indx
@@ -38,7 +37,7 @@ module TourCmd(
    logic [31:0] encoded_cmd;
    always_comb begin
        encoded_cmd = 0;
-       unique case (move)
+        case (move)
            8'b0000_0001 : encoded_cmd = {16'h4002,16'h5BF1}; // Move 0
            8'b0000_0010 : encoded_cmd = {16'h4002,16'h53F1}; // Move 1
            8'b0000_0100 : encoded_cmd = {16'h4001,16'h53F2}; // Move 2
@@ -51,6 +50,9 @@ module TourCmd(
        endcase
    end
 
+   // Mux logic for cmd and cmd_rdy
+   
+
    assign cmd_rdy = en_cmd_mux ? cmd_rdy_SM : cmd_rdy_UART;
    assign cmd = en_cmd_mux ? cmd_SM : cmd_UART;
 
@@ -60,7 +62,7 @@ module TourCmd(
 
    // State transition logic
    always_ff @(posedge clk or negedge rst_n) begin
-       unique if (!rst_n)
+        if (!rst_n)
            state <= IDLE;
        else 
            state <= nxt_state;
@@ -113,5 +115,4 @@ module TourCmd(
            end
        endcase
    end
-
 endmodule
