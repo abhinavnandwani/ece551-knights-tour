@@ -11,18 +11,20 @@ module PID(
 );
 
     logic signed [13:0] P_term;
-    logic signed [13:0] P_term_se;
+    logic signed [13:0] P_term_se,P_term_ff;
     logic signed [8:0] I_term;
-    logic signed [13:0] I_term_se;
+    logic signed [13:0] I_term_se,I_term_ff;
     logic signed [12:0] D_term;
     logic signed [13:0] D_term_se;
-    logic signed [13:0] PID;
+    logic signed [13:0] PID,PID_ff;
+    logic [9:0] frwrd_ff,frwrd_2ff;
+    logic moving_ff,moving_2ff,err_vld_2ff;
 
 
 
     //// P term ////
 	localparam signed P_COEFF = 6'h10;
-	logic signed [9:0] error_stat;
+	logic signed [9:0] error_stat,error_stat_2ff;
 	assign error_stat = (error[11] == 1'b0 && (|error[10:9] == 1'b1)) ? 10'b0111111111:
 						(error[11] == 1'b1 && (&error[10:9] == 1'b0)) ? 10'b1000000000:error[9:0];
     assign P_term = error_stat * P_COEFF;
@@ -65,13 +67,13 @@ module PID(
             q1 <= 0;
             q2 <= 0;
             q3 <= 0;
-        end else if (err_vld) begin
-            q1 <= error_stat;
+        end else if (err_vld_2ff) begin
+            q1 <= error_stat_2ff;
             q2 <= q1;
             q3 <= q2;
         end
     assign prev_err = q3;
-	assign D_diff = error_stat - prev_err;
+	assign D_diff = error_stat_2ff - prev_err;
 	assign sat_D_diff = (D_diff[9] == 1'b0 && (|D_diff[8:7] == 1'b1)) ? 8'b01111111:
 					(D_diff[9] == 1'b1 && (&D_diff[8:7] == 1'b0)) ? 8'b10000000:D_diff[7:0];
 	assign D_term = D_COEFF*sat_D_diff;
@@ -81,18 +83,50 @@ module PID(
     assign P_term_se = {P_term[13],P_term[13],P_term[13:1]};
     assign I_term_se = {{5{I_term[8]}},I_term};
     assign D_term_se = {D_term[12],D_term};
-    assign PID = (P_term_se + I_term_se + D_term_se);
+    always @(posedge clk, negedge rst_n) begin
+        if (!rst_n) begin
+                    P_term_ff <= 0;
+        I_term_ff <= 0;
+        moving_ff <= 0;
+        frwrd_ff <= 0;
+        end else begin
+        P_term_ff <= P_term_se;
+        I_term_ff <= I_term_se;
+        moving_ff <= moving;
+        frwrd_ff <= frwrd;
+        end
+        
+    end
+    assign PID = (P_term_ff + I_term_ff + D_term_se);
+
+    always @(posedge clk, negedge rst_n) begin
+        
+        if (!rst_n) begin
+                PID_ff <= 0;
+        error_stat_2ff <= 0;
+        err_vld_2ff <= 0;
+        moving_2ff <= 0;
+        frwrd_2ff <= 0;
+        end else begin
+        PID_ff <= PID;
+        error_stat_2ff <= error_stat;
+        err_vld_2ff <= err_vld;
+        moving_2ff <= moving_ff;
+        frwrd_2ff <= frwrd_ff;
+        end
+        
+    end
 
     // mux //
 
     logic signed [10:0] lft_mux;
-    assign lft_mux = moving ? (PID[13:3] + {1'b0,frwrd}) : 11'h000;
+    assign lft_mux = moving_2ff ? (PID_ff[13:3] + {1'b0,frwrd_2ff}) : 11'h000;
 
     logic signed [10:0] rght_mux;
-    assign rght_mux = moving ? ({1'b0,frwrd} - PID[13:3]) : 11'h000;
+    assign rght_mux = moving_2ff ? ({1'b0,frwrd_2ff} - PID_ff[13:3]) : 11'h000;
 
-    assign lft_spd = (~PID[13] & lft_mux[10]) ? 11'h3ff : lft_mux;
-    assign rght_spd = (PID[13] & rght_mux[10]) ? 11'h3ff : rght_mux;
+    assign lft_spd = (~PID_ff[13] & lft_mux[10]) ? 11'h3ff : lft_mux;
+    assign rght_spd = (PID_ff[13] & rght_mux[10]) ? 11'h3ff : rght_mux;
 
  
 

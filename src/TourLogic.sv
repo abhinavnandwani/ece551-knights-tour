@@ -3,13 +3,13 @@ module TourLogic(
   input logic [2:0] x_start, y_start,      // Starting x and y coordinates
   input logic [4:0] indx,                  // Index to track the moves
   output logic done,                       // Signal indicating the knight's tour is complete
-  output logic [7:0] move                  // Output representing the current move in a one-hot vector
+  output logic [3:0] move                  // Output representing the current move in a one-hot vector
 );
 
   // Internal logic declarations
-  logic [7:0] state, next_state;                  // Current and next states for the state machine
+  logic [3:0] state, next_state;                  // Current and next states for the state machine
   logic board [4:0][4:0];                         // 5x5 board to track visited positions
-  logic [7:0] chosen_moves [23:0];         // Array to store the chosen moves in a one-hot encoding
+  logic [3:0] chosen_moves [23:0];         // Array to store the chosen moves in a one-hot encoding
   logic [5:0] x_y_order [23:0];                   // Array to track the order of x, y positions visited
 
   logic [4:0] curr_move;                          // Current move index
@@ -112,44 +112,40 @@ module TourLogic(
   // Sequential block for state machine logic
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) 
-      state <= 8'hff;                       // Reset to the initial state
+      state <= 4'h0;                       // Reset to the initial state
     else 
       state <= next_state;                        // Move to the next state
   end
 
-  // Combinational block for state transitions
+  // State machine combinational logic
   always_comb begin
-    curr_move_move = 2'h0;                        // Default no move
-    next_state = state;                           // Default to current state
-    x_new = x_pos;                                // Default new position
+    curr_move_move = 2'b00;
+    next_state = state;
+    x_new = x_pos;
     y_new = y_pos;
-    done = 1'b0;                                  // Default tour not done
+    done = 1'b0;
     en = 1'b0;
-    update_position = 1'b0;                       // Default no position update
-    //move = state;
+    update_position = 1'b0;
 
-    casex (state)
-      8'hff : begin
+    case (state)
+      4'h0: begin
         if (go) begin
-          next_state = 8'h01;
+          next_state = 4'h1;
           en = 1'b1;
         end
       end
-
-      8'bxxxxxxx1: begin                 // (2,1)
+      4'h1: begin
         if (is_valid_move(x_pos, y_pos, x_pos + 2, y_pos + 1)) begin
-          // Logic for handling the move (2, 1)
           x_new = x_pos + 2;
           y_new = y_pos + 1;
           curr_move_move = 2'b01;
-          next_state = 8'b00000001;  // Shift the state to the next move
+          next_state = 4'h2;
           update_position = 1'b1;
         end else begin
-          // No valid move, backtrack (shift state left)
-          next_state = state << 1;
+          next_state = 4'h2;
         end
       end
-      8'bxxxxxx10: begin                 // (1,2)
+     4'h2: begin                 // (1,2)
         if (is_valid_move(x_pos, y_pos, x_pos + 1, y_pos + 2)) begin
           // Logic for handling the move (1, 2)
           x_new = x_pos + 1;
@@ -159,10 +155,10 @@ module TourLogic(
           update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
-          next_state = state << 1;
+          next_state = 4'h3;
         end
       end
-      8'bxxxxx100: begin                 // (-1,2)
+      4'h3: begin                 // (-1,2)
         if (is_valid_move(x_pos, y_pos, x_pos - 1, y_pos + 2)) begin
           // Logic for handling the move (-1, 2)
           x_new = x_pos - 1;
@@ -172,10 +168,10 @@ module TourLogic(
           update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
-          next_state = state << 1;
+          next_state = 4'h4;
         end
       end
-      8'bxxxx1000: begin                 // (-2,1)
+      4'h4: begin                 // (-2,1)
         if (is_valid_move(x_pos, y_pos, x_pos - 2, y_pos + 1)) begin
           // Logic for handling the move (-2, 1)
           x_new = x_pos - 2;
@@ -185,10 +181,10 @@ module TourLogic(
           update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
-          next_state = state << 1;
+          next_state = 4'h5;
         end
       end
-      8'bxxx10000: begin                 // (-2,-1)
+      4'h5: begin                 // (-2,-1)
         if (is_valid_move(x_pos, y_pos, x_pos - 2, y_pos - 1)) begin
           // Logic for handling the move (-2, -1)
           x_new = x_pos - 2;
@@ -198,10 +194,10 @@ module TourLogic(
           update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
-          next_state = state << 1;
+          next_state = 4'h6;
         end
       end
-      8'bxx100000: begin                 // (-1,-2)
+      4'h6: begin                 // (-1,-2)
         if (is_valid_move(x_pos, y_pos, x_pos - 1, y_pos - 2)) begin
           // Logic for handling the move (-1, -2)
           x_new = x_pos - 1;
@@ -211,10 +207,10 @@ module TourLogic(
           update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
-          next_state = state << 1;
+          next_state = 4'h7;
         end
       end
-      8'bx1000000: begin                 // (1,-2)
+      4'h7: begin                 // (1,-2)
         if (is_valid_move(x_pos, y_pos, x_pos + 1, y_pos - 2)) begin
           // Logic for handling the move (1, -2)
           x_new = x_pos + 1;
@@ -224,20 +220,20 @@ module TourLogic(
           update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
-          next_state = state << 1;
+          next_state = 4'h8;
         end
       end
-      8'b10000000: begin                 // (2,-1)
+      4'h8: begin                 // (2,-1)
         if (is_valid_move(x_pos, y_pos, x_pos + 2, y_pos - 1)) begin
           // Logic for handling the move (2, -1)
           x_new = x_pos + 2;
           y_new = y_pos - 1;
           curr_move_move = 2'b01;
-          next_state = 8'b00000001;  // Shift the state to the next move
+          next_state = 4'h1;  // Shift the state to the next move
           update_position = 1'b1;
         end else begin
           // No valid move, backtrack (shift state left)
-          next_state = state << 1;
+          next_state = state + 1;
         end
       end
       default: begin
@@ -246,7 +242,7 @@ module TourLogic(
         if (curr_move == 8'd24) begin
           done = 1'b1;
         end else begin
-          next_state = chosen_moves[curr_move-1] << 1;
+          next_state = (chosen_moves[curr_move-1]) + 1;
           x_new = {1'b0, x_y_order[curr_move-1][5:3]};
           y_new = {1'b0, x_y_order[curr_move-1][2:0]};
           curr_move_move = 2'b10;
@@ -255,3 +251,4 @@ module TourLogic(
     endcase
   end
 endmodule
+

@@ -183,7 +183,6 @@ module cmd_proc(
                 4'b0010: begin nxt_state = CALIBRATE; strt_cal = 1'b1; end
                 4'b010x: begin nxt_state = MOVE_I; move_cmd = 1'b1; end
                 4'b0110: tour_go = 1'b1; // Hand off to tour module
-                
                 default: nxt_state = state; // alpha particle collision handling
                 endcase
             end

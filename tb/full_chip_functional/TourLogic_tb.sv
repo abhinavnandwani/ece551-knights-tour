@@ -70,6 +70,7 @@ module TourLogic_tb();
         begin: timeout
           repeat(80000000) @(negedge clk);
           $display("ERROR: Simulation timed out at x=%d, y=%d.", x_start, y_start);
+          display_board();
           $stop();
         end
         begin
@@ -102,8 +103,8 @@ module TourLogic_tb();
     end
   endtask
 
-  // // Debug Board State at Every Update
-  // always @(negedge iDUT.update_position) begin
+  // //Debug Board State at Every Update
+  // always @(posedge iDUT.update_position) begin
   //   $display("DEBUG: Board state updated");
   //   display_board();
   // end

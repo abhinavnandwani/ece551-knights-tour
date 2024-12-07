@@ -31,24 +31,20 @@ module UART_rx(clk,rst_n,RX,rx_data,clr_rdy,rdy);
 
 
     // BIT COUNTER
-    always_ff@(posedge clk, negedge rst_n)
-        if (!rst_n)
-          bit_cnt <= 0;
-        else if (start)
+    always_ff@(posedge clk)
+         if (start)
             bit_cnt <= 0;
         else if (shift)
-            bit_cnt <= bit_cnt +1'b1;
+            bit_cnt <= bit_cnt + 1;
 
     assign baud_value = start ? 1302:2604;
     assign shift = (baud_cnt == 0) ? 1'b1:1'b0;
     // BAUD COUNTER
-    always_ff@(posedge clk, negedge rst_n)
-        if (!rst_n)
-          baud_cnt <= 0;
-        else if (start | shift)
+    always_ff@(posedge clk)
+         if (start | shift)
             baud_cnt <= baud_value;
         else if (receiving)
-            baud_cnt <= baud_cnt - 1'b1;
+            baud_cnt <= baud_cnt - 1;
     
     // SHIFTER
     always_ff@(posedge clk, negedge rst_n)
@@ -82,13 +78,14 @@ module UART_rx(clk,rst_n,RX,rx_data,clr_rdy,rdy);
       start = 0;
       receiving = 0;
       set_rdy = 0;
+      nxt_state = state;
 
       // state transition and output logic //
       case (state) inside
         RECEIVING :  if(bit_cnt == 10) begin
-                        set_rdy = 1;
+                        set_rdy = 1'b1;
                         nxt_state = IDLE;
-                      end else receiving = 1;
+                      end else receiving = 1'b1;
         // default case: IDLE //
         default:      if (RX_3ff && !RX_2ff) begin
                       start = 1;

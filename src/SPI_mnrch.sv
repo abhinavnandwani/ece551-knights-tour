@@ -53,7 +53,7 @@ module SPI_mnrch(
 	//// bit counter ////
 	logic [4:0] bit_cntr;
 	logic done16;
-	assign done16 = (bit_cntr == 5'b10000) ? 1'b1:1'b0;
+	assign done16 = bit_cntr[4];
 	always_ff@(posedge clk, negedge rst_n)	begin
 		if (!rst_n)
 			bit_cntr <= 0;

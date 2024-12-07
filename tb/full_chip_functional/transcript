@@ -1,6 +1,6 @@
 # vsim -c -do "run -all; quit" TourLogic_tb 
-# Start time: 05:44:33 on Dec 05,2024
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Start time: 17:17:27 on Dec 06,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt14
 # //  Questa Sim
 # //  Version 2023.2_1 linux May 12 2023
 # //
@@ -123,10 +123,10 @@
 # --------------------
 # 
 # INFO: Testbench completed for all black squares.
-# ** Note: $stop    : TourLogic_tb.sv(88)
-#    Time: 11416965 ns  Iteration: 4  Instance: /TourLogic_tb
-# Break at TourLogic_tb.sv line 88
-# Stopped at TourLogic_tb.sv line 88
+# ** Note: $stop    : TourLogic_tb.sv(89)
+#    Time: 15944295 ns  Iteration: 4  Instance: /TourLogic_tb
+# Break at TourLogic_tb.sv line 89
+# Stopped at TourLogic_tb.sv line 89
 #  quit
-# End time: 05:44:34 on Dec 05,2024, Elapsed time: 0:00:01
+# End time: 17:17:28 on Dec 06,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
