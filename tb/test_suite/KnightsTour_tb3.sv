@@ -1,7 +1,7 @@
 /**
  * This module tests if the left and right guardrails are working properly.
  */
-module KnightsTour_tb();
+module KnightsTour_tb3();
 
     localparam FAST_SIM = 1;
 

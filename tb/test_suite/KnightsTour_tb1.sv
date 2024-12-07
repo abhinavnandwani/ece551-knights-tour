@@ -2,7 +2,7 @@
  * This module tests if the basic functions of the signals are implemented properly.
  */
 import tb_tasks::*;
-module KnightsTour_tb();
+module KnightsTour_tb1();
 
     localparam FAST_SIM = 1;
 

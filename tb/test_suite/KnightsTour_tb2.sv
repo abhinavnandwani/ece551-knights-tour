@@ -1,7 +1,7 @@
 /**
  * This module tests the behavior of cntrIR and verifies if the knight obeys the move command sent through the Bluetooth module properly.
  */
-module KnightsTour_tb();
+module KnightsTour_tb2();
 
     localparam FAST_SIM = 1;
 

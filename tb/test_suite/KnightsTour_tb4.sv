@@ -2,7 +2,7 @@
  * This module tests the tour logic.
  */
 import tb_tasks::*;
-module KnightsTour_tb();
+module KnightsTour_tb4();
 
     localparam FAST_SIM = 1;
 

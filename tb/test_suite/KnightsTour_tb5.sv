@@ -3,7 +3,7 @@
  */
 
 import tb_tasks::*;
-module KnightsTour_tb();
+module KnightsTour_tb5();
 
     localparam FAST_SIM = 1;
 
