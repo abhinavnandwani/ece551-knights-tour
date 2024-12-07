@@ -1,7 +1,7 @@
 Coverage Report Summary Data by file
 
 =================================================================================
-=== File: IR_intf.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/IR_intf.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
@@ -9,28 +9,27 @@ Coverage Report Summary Data by file
     Conditions                       2         2         0   100.00%
     Expressions                      6         6         0   100.00%
     Statements                      41        41         0   100.00%
-    Toggles                        144       126        18    87.50%
+    Toggles                        144       120        24    83.33%
 
 =================================================================================
-=== File: KnightPhysics.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/KnightPhysics.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Branches                       114       101        13    88.59%
-    Conditions                      69        45        24    65.21%
-    Statements                      90        81         9    90.00%
-    Toggles                        522       520         2    99.61%
+    Branches                       114        54        60    47.36%
+    Conditions                      69        21        48    30.43%
+    Statements                      90        61        29    67.77%
+    Toggles                        522       511        11    97.89%
 
 =================================================================================
-=== File: KnightsTour.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/KnightsTour.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Statements                       2         2         0   100.00%
-    Toggles                        288       258        30    89.58%
+    Toggles                        280       214        66    76.42%
 
 =================================================================================
-=== File: MtrDrv.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/MtrDrv.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
@@ -38,18 +37,18 @@ Coverage Report Summary Data by file
     Toggles                        100        99         1    99.00%
 
 =================================================================================
-=== File: PID.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/PID.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Branches                        27        25         2    92.59%
+    Branches                        31        29         2    93.54%
     Conditions                      14        10         4    71.42%
     Expressions                      3         3         0   100.00%
-    Statements                      39        39         0   100.00%
+    Statements                      48        48         0   100.00%
     Toggles                        732       681        51    93.03%
 
 =================================================================================
-=== File: PWM11.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/PWM11.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
@@ -59,16 +58,16 @@ Coverage Report Summary Data by file
     Toggles                         54        53         1    98.14%
 
 =================================================================================
-=== File: RemoteComm.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/RemoteComm.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
     Branches                        20        20         0   100.00%
     Statements                      23        23         0   100.00%
-    Toggles                        110        49        61    44.54%
+    Toggles                        110        89        21    80.90%
 
 =================================================================================
-=== File: SPI_iNEMO4.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/SPI_iNEMO4.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
@@ -79,67 +78,67 @@ Coverage Report Summary Data by file
     Toggles                        178       156        22    87.64%
 
 =================================================================================
-=== File: SPI_mnrch.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/SPI_mnrch.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
     Branches                        30        30         0   100.00%
-    Expressions                      2         2         0   100.00%
-    Statements                      37        37         0   100.00%
+    Expressions                      1         1         0   100.00%
+    Statements                      36        36         0   100.00%
     Toggles                        150       137        13    91.33%
 
 =================================================================================
-=== File: TourCmd.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/TourCmd.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Branches                        38        37         1    97.36%
-    Conditions                       3         3         0   100.00%
-    Expressions                      3         3         0   100.00%
-    Statements                      46        45         1    97.82%
-    Toggles                        244       176        68    72.13%
+    Branches                        40        11        29    27.50%
+    Conditions                       3         0         3     0.00%
+    Expressions                      3         1         2    33.33%
+    Statements                      47        20        27    42.55%
+    Toggles                        236        65       171    27.54%
 
 =================================================================================
-=== File: TourLogic.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/TourLogic.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Branches                        52        52         0   100.00%
-    Conditions                       6         4         2    66.66%
-    Statements                      98        98         0   100.00%
-    Toggles                        128       118        10    92.18%
+    Branches                        52        15        37    28.84%
+    Conditions                       6         0         6     0.00%
+    Statements                      98        27        71    27.55%
+    Toggles                        104        15        89    14.42%
 
 =================================================================================
-=== File: UART.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/UART.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Toggles                         48        47         1    97.91%
+    Toggles                         48        45         3    93.75%
 
 =================================================================================
-=== File: UART_rx.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/UART_rx.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Branches                        27        27         0   100.00%
+    Branches                        25        25         0   100.00%
     Conditions                       7         6         1    85.71%
     Expressions                      1         1         0   100.00%
-    Statements                      33        33         0   100.00%
+    Statements                      32        32         0   100.00%
     Toggles                        118       109         9    92.37%
 
 =================================================================================
-=== File: UART_tx.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/UART_tx.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Branches                        24        24         0   100.00%
+    Branches                        26        26         0   100.00%
     Conditions                       5         5         0   100.00%
     Expressions                      1         1         0   100.00%
     Statements                      31        31         0   100.00%
-    Toggles                         88        87         1    98.86%
+    Toggles                         88        85         3    96.59%
 
 =================================================================================
-=== File: UART_wrapper.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/UART_wrapper.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
@@ -148,38 +147,38 @@ Coverage Report Summary Data by file
     Toggles                        108        79        29    73.14%
 
 =================================================================================
-=== File: cmd_proc.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/cmd_proc.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Branches                        46        45         1    97.82%
+    Branches                        46        43         3    93.47%
     Conditions                       3         3         0   100.00%
     Expressions                      7         7         0   100.00%
-    Statements                      62        61         1    98.38%
-    Toggles                        270       214        56    79.25%
+    Statements                      62        60         2    96.77%
+    Toggles                        270       196        74    72.59%
 
 =================================================================================
-=== File: inert_intf.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/inert_intf.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
     Branches                        27        27         0   100.00%
     Statements                      37        37         0   100.00%
-    Toggles                        218       205        13    94.03%
+    Toggles                        218       203        15    93.11%
 
 =================================================================================
-=== File: inertial_integrator.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/inertial_integrator.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
-    Branches                        34        33         1    97.05%
-    Conditions                       9         5         4    55.55%
+    Branches                        34        32         2    94.11%
+    Conditions                       9         4         5    44.44%
     Expressions                      1         1         0   100.00%
     Statements                      50        47         3    94.00%
-    Toggles                        398       292       106    73.36%
+    Toggles                        398       280       118    70.35%
 
 =================================================================================
-=== File: rst_synch.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/rst_synch.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
@@ -188,7 +187,7 @@ Coverage Report Summary Data by file
     Toggles                          8         5         3    62.50%
 
 =================================================================================
-=== File: sponge.sv
+=== File: /filespace/y/yellapuntula/ece551/tesSuitecopy/sponge.sv
 =================================================================================
     Enabled Coverage              Bins      Hits    Misses  Coverage
     ----------------              ----      ----    ------  --------
@@ -198,5 +197,7 @@ Coverage Report Summary Data by file
     Toggles                        152       131        21    86.18%
 
 
-Total Coverage By File (code coverage only, filtered view): 88.38%
+TOTAL ASSERTION COVERAGE: 100.00%  ASSERTIONS: 1
+
+Total Coverage By File (code coverage only, filtered view): 73.66%
 
