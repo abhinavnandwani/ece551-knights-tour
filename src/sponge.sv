@@ -15,7 +15,7 @@ module sponge(
   parameter FAST_SIM = 1; 
 
   // State machine states
-  typedef enum [3:0] {IDLE, D7_1, E7_1, F7_1, E7_2, F7_2, D7_2, A6, D7_3} state_t;
+  typedef enum logic [3:0] {IDLE, D7_1, E7_1, F7_1, E7_2, F7_2, D7_2, A6, D7_3} state_t;
   state_t state, nxt_state;   // Current and next states
 
   // Internal signals

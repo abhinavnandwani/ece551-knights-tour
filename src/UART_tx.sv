@@ -91,7 +91,7 @@ module UART_tx(clk,rst_n,TX,trmt,tx_data,tx_done);
 		init = 0;
 		transmitting = 0;
 		set_done = 0;
-		case (state) inside 
+		case (state) 
             // we "transmit" data to the receiver for "10" bits, each bit takes almost 2604 cycles, start bit 1302. 
 			TRANSMITING: if (bit_cnt < 10) // counts the bits
 							transmitting = 1;

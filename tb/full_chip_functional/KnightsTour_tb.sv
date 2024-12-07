@@ -1,8 +1,8 @@
 /**
-*This module tests the tour logic 
+*This module tests the behavior of cntrIR and if the knight obeys the move command sent through the bluetooth module properly
 */
 
-module KnightsTour_tb();
+module KnightsTour_tb2();
 
     localparam FAST_SIM = 1;
     
@@ -50,17 +50,14 @@ module KnightsTour_tb();
                         .rghtPWM1(rghtPWM1),.rghtPWM2(rghtPWM2),.IR_en(IR_en),
                         .lftIR_n(lftIR_n),.rghtIR_n(rghtIR_n),.cntrIR_n(cntrIR_n)); 
 
-    logic [2:0] countCntr;
-    logic [1:0] countLft, countRght;
+    logic [1:0] count; //COunt variable to keep track of cntrIr rise
 
     always begin
         clk = 0;
         RST_n = 0;
         cmd = 16'h0000;
         send_cmd = 0;
-        countCntr = 0;
-        countLft = 0;
-        countRght = 0;
+        count = 0;
         
         @(negedge clk);
         RST_n = 1;
@@ -99,17 +96,45 @@ module KnightsTour_tb();
         @(posedge resp_rdy);
         @(negedge clk);
 
-        cmd = 16'h6000;
+        cmd = 16'h5BF1;
         send_cmd = 1;
 
         @(negedge clk);
-        send_cmd = 0; 
+        send_cmd = 0;
 
-        // check for proper handing off to tour cmd //
+        fork 
+            begin:CountCntrIRrise
+                while (count >= 0) begin
+                    @(posedge iDUT.iCMD.cntrIR);
+                    count = count + 1;
+                    @(negedge clk);
+                end
+            end
+            begin: timeoutRespRdy
+                repeat (10000000) @(negedge clk);
+                $display("Timed out waiting for resp_rdy");
+            end
+            begin
+                @(posedge resp_rdy);
+                disable timeoutRespRdy;
+                disable CountCntrIRrise;
+                assert (resp == 8'hA5) $display("Positive acknowledgement received");
+                else begin
+                    $display("Positive acknowledgement not received");
+                    $stop();
+                end
+            end
+        join
 
-        repeat(49) @(posedge iDUT.iTC.send_resp);
+        assert (count == 2'b10) $display("cntrIR rose 2 times");
+        else begin
+            $display("Mistake: cntrIR rose %d times", count);
+            $stop();
+        end
 
-        $display("Tests done for latch liberation front");
+        repeat (150000) @(negedge clk); //observe
+
+        $display("Test passed for Latch Liberation front");
         $stop();
     end
 
