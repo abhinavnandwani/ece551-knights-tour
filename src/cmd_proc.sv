@@ -28,13 +28,13 @@ module cmd_proc(
 
     //// Forward Register Logic ////
     logic inc_frwrd, dec_frwrd, clr_frwrd;
-    logic [7:0] inc;
+    logic signed [7:0] inc;
     logic zero, max_spd, en;
 
     // Increment logic based on simulation speed //
     generate
-        if (FAST_SIM) assign inc = inc_frwrd ? 8'h20 : (dec_frwrd ? 8'hC0 : 8'h00);
-        else assign inc = inc_frwrd ? 8'h03 : (dec_frwrd ? 8'hFA : 8'h00);
+        if (FAST_SIM) assign inc = inc_frwrd ? 8'sh20 : (dec_frwrd ? 8'shC0 : 8'sh00);
+        else assign inc = inc_frwrd ? 8'sh03 : (dec_frwrd ? 8'shFA : 8'sh00);
     endgenerate
 
     assign max_spd = &frwrd[9:8]; // Detect maximum speed
@@ -48,7 +48,7 @@ module cmd_proc(
         else if (clr_frwrd)
             frwrd <= 0;
         else if (en)
-            frwrd <= frwrd + inc;
+            frwrd <= frwrd + {2{inc[7]},inc};
     end
 
     //// Counting Squares ////
@@ -183,6 +183,7 @@ module cmd_proc(
                 4'b0010: begin nxt_state = CALIBRATE; strt_cal = 1'b1; end
                 4'b010x: begin nxt_state = MOVE_I; move_cmd = 1'b1; end
                 4'b0110: tour_go = 1'b1; // Hand off to tour module
+                
                 default: nxt_state = state; // alpha particle collision handling
                 endcase
             end
