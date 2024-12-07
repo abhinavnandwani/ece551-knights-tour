@@ -1,0 +1,201 @@
+Coverage Report Summary Data by file
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/IR_intf.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        28        27         1    96.42%
+    Conditions                       2         2         0   100.00%
+    Expressions                      6         4         2    66.66%
+    Statements                      41        40         1    97.56%
+    Toggles                        122        90        32    73.77%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/KnightPhysics.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                       114        22        92    19.29%
+    Conditions                      69         1        68     1.44%
+    Statements                      90        44        46    48.88%
+    Toggles                        516       225       291    43.60%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/KnightsTour.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Toggles                        280       131       149    46.78%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/MtrDrv.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Statements                       2         2         0   100.00%
+    Toggles                         44         0        44     0.00%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/PID.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        31        21        10    67.74%
+    Conditions                      14         1        13     7.14%
+    Expressions                      3         0         3     0.00%
+    Statements                      48        48         0   100.00%
+    Toggles                        680       392       288    57.64%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/PWM11.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                         2         2         0   100.00%
+    Expressions                      1         1         0   100.00%
+    Statements                       6         6         0   100.00%
+    Toggles                         28        28         0   100.00%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/RemoteComm.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        20        20         0   100.00%
+    Statements                      23        23         0   100.00%
+    Toggles                        110        50        60    45.45%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/SPI_iNEMO4.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        53        39        14    73.58%
+    Conditions                       2         2         0   100.00%
+    Expressions                      3         1         2    33.33%
+    Statements                      84        60        24    71.42%
+    Toggles                        136       116        20    85.29%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/SPI_mnrch.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        30        30         0   100.00%
+    Expressions                      1         1         0   100.00%
+    Statements                      36        36         0   100.00%
+    Toggles                        110       110         0   100.00%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/TourCmd.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        40        11        29    27.50%
+    Conditions                       3         0         3     0.00%
+    Expressions                      3         1         2    33.33%
+    Statements                      47        20        27    42.55%
+    Toggles                        174        24       150    13.79%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/TourLogic.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        52        15        37    28.84%
+    Conditions                       6         0         6     0.00%
+    Statements                      98        27        71    27.55%
+    Toggles                         76         0        76     0.00%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/UART.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Toggles                         20        20         0   100.00%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/UART_rx.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        25        25         0   100.00%
+    Conditions                       7         6         1    85.71%
+    Expressions                      1         1         0   100.00%
+    Statements                      32        32         0   100.00%
+    Toggles                        118       109         9    92.37%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/UART_tx.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        26        26         0   100.00%
+    Conditions                       5         5         0   100.00%
+    Expressions                      1         1         0   100.00%
+    Statements                      31        31         0   100.00%
+    Toggles                         64        64         0   100.00%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/UART_wrapper.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        15        15         0   100.00%
+    Statements                      22        22         0   100.00%
+    Toggles                         80        55        25    68.75%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/cmd_proc.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        46        23        23    50.00%
+    Conditions                       3         0         3     0.00%
+    Expressions                      7         0         7     0.00%
+    Statements                      62        41        21    66.12%
+    Toggles                        198        34       164    17.17%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/inert_intf.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        27        27         0   100.00%
+    Statements                      37        37         0   100.00%
+    Toggles                        196       184        12    93.87%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/inertial_integrator.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        34        31         3    91.17%
+    Conditions                       9         2         7    22.22%
+    Expressions                      1         1         0   100.00%
+    Statements                      50        47         3    94.00%
+    Toggles                        328       209       119    63.71%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/rst_synch.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                         2         2         0   100.00%
+    Statements                       5         5         0   100.00%
+    Toggles                          8         5         3    62.50%
+
+=================================================================================
+=== File: /filespace/m/mvsierra/Downloads/knights-tour-551-main/src/sponge.sv
+=================================================================================
+    Enabled Coverage              Bins      Hits    Misses  Coverage
+    ----------------              ----      ----    ------  --------
+    Branches                        40        10        30    25.00%
+    Conditions                       6         0         6     0.00%
+    Statements                      65        19        46    29.23%
+    Toggles                        146         2       144     1.36%
+
+
+Total Coverage By File (code coverage only, filtered view): 47.61%
+
