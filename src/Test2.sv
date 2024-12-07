@@ -62,37 +62,10 @@ module KnightsTour_tb2();
         @(negedge clk);
         RST_n = 1;
 
-        fork
-            begin: timeoutSetup
-                repeat (1000000) @(posedge clk);
-                $display("Timed out waiting for Nemo_setup");
-                $stop();
-            end
-            begin
-                @(posedge iPHYS.iNEMO.NEMO_setup);
-                disable timeoutSetup;
-                $display("NEMO_setup asserted");
-            end
-        join
+        nemosetup(clk, iPHYS.iNEMO.NEMO_setup); //Wait for nemo to be setup
 
-        @(negedge clk);
-        cmd = 16'h2000; //Callibrate command
-        send_cmd = 1;
+        calibrateDUT(clk, iDUT.cal_done, send_cmd, cmd); //wait for calibration to be done
 
-        @(negedge clk);
-        send_cmd = 0;
-        fork
-            begin: timeoutCal
-                repeat (1000000) @(posedge clk);
-                $display("Timed out waiting for cal_done");
-                $stop();
-            end
-            begin
-                @(posedge iDUT.cal_done);
-                disable timeoutCal;
-                $display("cal_done asserted");
-            end
-        join
         @(posedge resp_rdy);
         @(negedge clk);
 

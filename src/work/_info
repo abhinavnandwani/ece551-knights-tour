@@ -1,0 +1,784 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/intelFPGA/20.1
+vcmd_proc
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1733530843
+!i10b 1
+!s100 JKASi2ZfPM^Pk<?G?j^JH3
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+InCM_Ra[Qen]0gR^ACkC7C1
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/adity/knights-tour-551/src
+Z5 w1733528519
+8C:/Users/adity/knights-tour-551/src/cmd_proc.sv
+FC:/Users/adity/knights-tour-551/src/cmd_proc.sv
+!i122 26
+L0 6 189
+Z6 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z7 !s108 1733530843.000000
+!s107 C:/Users/adity/knights-tour-551/src/cmd_proc.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/cmd_proc.sv|
+!i113 1
+Z8 !s102 -cover sbcet3
+Z9 o-work work -sv -cover sbcet3
+Z10 tCvgOpt 0
+vinert_intf
+R0
+R1
+!i10b 1
+!s100 camDR]QHmY>Og@]]_L_^A1
+R2
+IA4PU0_6[LjBYAz;T5X>mX1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/inert_intf.sv
+FC:/Users/adity/knights-tour-551/src/inert_intf.sv
+!i122 27
+L0 7 182
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/Users/adity/knights-tour-551/src/inert_intf.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/inert_intf.sv|
+!i113 1
+R8
+R9
+R10
+vinertial_integrator
+R0
+R1
+!i10b 1
+!s100 EKB7oNKD40]U9]>GEWcMB0
+R2
+I1D^]mJlLK@8N^k5cKNkld2
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/inertial_integrator.sv
+FC:/Users/adity/knights-tour-551/src/inertial_integrator.sv
+!i122 28
+L0 1 204
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/Users/adity/knights-tour-551/src/inertial_integrator.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/inertial_integrator.sv|
+!i113 1
+R8
+R9
+R10
+vinverse_PWM11e
+R0
+R1
+!i10b 1
+!s100 WT3o>WI6k:<fAE=<=<^c10
+R2
+IZ_QlUL8X6L>_M[ZSSzEIb2
+R3
+S1
+R4
+R5
+Z11 8C:/Users/adity/knights-tour-551/src/KnightPhysics.sv
+Z12 FC:/Users/adity/knights-tour-551/src/KnightPhysics.sv
+!i122 30
+L0 262 49
+R6
+r1
+!s85 0
+31
+R7
+Z13 !s107 C:/Users/adity/knights-tour-551/src/KnightPhysics.sv|
+Z14 !s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/KnightPhysics.sv|
+!i113 1
+R8
+R9
+R10
+ninverse_@p@w@m11e
+vIR_intf
+R0
+R1
+!i10b 1
+!s100 d;L^HH]ULa@;XbI3N=TVG2
+R2
+Ii>nkkcOHEEl_LQOb43eac2
+R3
+S1
+R4
+R5
+Z15 8C:/Users/adity/knights-tour-551/src/IR_intf.sv
+Z16 FC:/Users/adity/knights-tour-551/src/IR_intf.sv
+!i122 29
+L0 1 120
+R6
+r1
+!s85 0
+31
+R7
+Z17 !s107 C:/Users/adity/knights-tour-551/src/IR_intf.sv|
+Z18 !s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/IR_intf.sv|
+!i113 1
+R8
+R9
+R10
+n@i@r_intf
+vKnightPhysics
+R0
+R1
+!i10b 1
+!s100 :6T4J0b@_UN`PaS7OH^bU0
+R2
+I;;Cg11COZFQ5cVDDz]?k]3
+R3
+S1
+R4
+R5
+R11
+R12
+!i122 30
+Z19 L0 1 257
+R6
+r1
+!s85 0
+31
+R7
+R13
+R14
+!i113 1
+R8
+R9
+R10
+n@knight@physics
+vKnightsTour
+R0
+R1
+!i10b 1
+!s100 IDkGn3L_f^n7VWC4CT]>73
+R2
+IDmGc_aW5KF^O=KL^nhYLB1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/KnightsTour.sv
+FC:/Users/adity/knights-tour-551/src/KnightsTour.sv
+!i122 31
+L0 1 116
+R6
+r1
+!s85 0
+31
+R7
+!s107 C:/Users/adity/knights-tour-551/src/KnightsTour.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/KnightsTour.sv|
+!i113 1
+R8
+R9
+R10
+n@knights@tour
+vKnightsTour_tb1
+R0
+Z20 DXx4 work 8 tb_tasks 0 22 @_0m4>nb0^EVm1lV3VX`N2
+DXx4 work 13 Test1_sv_unit 0 22 gBRTNBQV[d2W:9;>?1gle0
+Z21 !s110 1733530822
+R3
+r1
+!s85 0
+!i10b 1
+!s100 Qc9<;24MEkn]:lO^H^IJg0
+IZmJJ]Li4VPLiVFN7Fi^j<2
+!s105 Test1_sv_unit
+S1
+R4
+R5
+Z22 8C:/Users/adity/knights-tour-551/src/Test1.sv
+Z23 FC:/Users/adity/knights-tour-551/src/Test1.sv
+!i122 15
+L0 5 204
+R6
+31
+Z24 !s108 1733530822.000000
+Z25 !s107 C:/Users/adity/knights-tour-551/src/Test1.sv|
+Z26 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/adity/knights-tour-551/src/Test1.sv|
+!i113 1
+Z27 o-work work -sv
+R10
+n@knights@tour_tb1
+vKnightsTour_tb2
+R0
+R21
+!i10b 1
+!s100 JJkA^`MbE=16d:A;bJ^Eh3
+R2
+I9PZ7ZYfd1_^_T2KfAjoPo3
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/Test2.sv
+FC:/Users/adity/knights-tour-551/src/Test2.sv
+!i122 16
+L0 5 139
+R6
+r1
+!s85 0
+31
+R24
+!s107 C:/Users/adity/knights-tour-551/src/Test2.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/adity/knights-tour-551/src/Test2.sv|
+!i113 1
+R27
+R10
+n@knights@tour_tb2
+vKnightsTour_tb3
+R0
+R21
+!i10b 1
+!s100 kY[j1TSa<Q7VG`BzCn:Q70
+R2
+I<:CCIo_fE=PdV0Ln^`Zg?2
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/Test3.sv
+FC:/Users/adity/knights-tour-551/src/Test3.sv
+!i122 17
+L0 5 202
+R6
+r1
+!s85 0
+31
+R24
+!s107 C:/Users/adity/knights-tour-551/src/Test3.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/adity/knights-tour-551/src/Test3.sv|
+!i113 1
+R27
+R10
+n@knights@tour_tb3
+vKnightsTour_tb4
+R0
+R21
+!i10b 1
+!s100 h2Y4hE:J51EcQTNFDS]>j2
+R2
+IQYN:j>:2<ZDB3WL^;eO>A1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/Test4.sv
+FC:/Users/adity/knights-tour-551/src/Test4.sv
+!i122 18
+L0 5 145
+R6
+r1
+!s85 0
+31
+R24
+!s107 C:/Users/adity/knights-tour-551/src/Test4.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/adity/knights-tour-551/src/Test4.sv|
+!i113 1
+R27
+R10
+n@knights@tour_tb4
+vKnightsTour_tb5
+R0
+R21
+!i10b 1
+!s100 HJIPfZnBZ5_l>f0IW>c4f0
+R2
+IXfO^EH]3bGo7UQWjMMF;61
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/Test5.sv
+FC:/Users/adity/knights-tour-551/src/Test5.sv
+!i122 19
+L0 5 152
+R6
+r1
+!s85 0
+31
+R24
+!s107 C:/Users/adity/knights-tour-551/src/Test5.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/adity/knights-tour-551/src/Test5.sv|
+!i113 1
+R27
+R10
+n@knights@tour_tb5
+vMtrDrv
+R0
+Z28 !s110 1733530844
+!i10b 1
+!s100 LaYAb:L[^Pf72Ji`jB[8I3
+R2
+INJd2MKQPeJQlUHd1AH22M0
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/MtrDrv.sv
+FC:/Users/adity/knights-tour-551/src/MtrDrv.sv
+!i122 32
+L0 10 15
+R6
+r1
+!s85 0
+31
+Z29 !s108 1733530844.000000
+!s107 C:/Users/adity/knights-tour-551/src/MtrDrv.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/MtrDrv.sv|
+!i113 1
+R8
+R9
+R10
+n@mtr@drv
+vPID
+R0
+R28
+!i10b 1
+!s100 dnn03fRodgO=6=PTmfB8j1
+R2
+IDhTg=7aKDc?n`c4jCPiW@0
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/PID.sv
+FC:/Users/adity/knights-tour-551/src/PID.sv
+!i122 33
+L0 2 118
+R6
+r1
+!s85 0
+31
+R29
+!s107 C:/Users/adity/knights-tour-551/src/PID.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/PID.sv|
+!i113 1
+R8
+R9
+R10
+n@p@i@d
+vPWM11
+R0
+R28
+!i10b 1
+!s100 PkXP_R3?`i^ZJIj]R3hP92
+R2
+IVg[9;CQdIR0jSV8DTBghE1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/PWM11.sv
+FC:/Users/adity/knights-tour-551/src/PWM11.sv
+!i122 34
+L0 9 28
+R6
+r1
+!s85 0
+31
+R29
+!s107 C:/Users/adity/knights-tour-551/src/PWM11.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/PWM11.sv|
+!i113 1
+R8
+R9
+R10
+n@p@w@m11
+vPWM3
+R0
+R1
+!i10b 1
+!s100 ln<lRe`j[nzR5f2KO=z7Y3
+R2
+IG?JAdi]f?H[D7J8ae<6>32
+R3
+S1
+R4
+R5
+R15
+R16
+!i122 29
+L0 126 36
+R6
+r1
+!s85 0
+31
+R7
+R17
+R18
+!i113 1
+R8
+R9
+R10
+n@p@w@m3
+vRemoteComm
+R0
+R28
+!i10b 1
+!s100 gnQG>z5^?Q[KVJM_n5Bl<0
+R2
+IdH0KBRi8IKg:?I9hzW6K[1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/RemoteComm.sv
+FC:/Users/adity/knights-tour-551/src/RemoteComm.sv
+!i122 35
+L0 7 109
+R6
+r1
+!s85 0
+31
+R29
+!s107 C:/Users/adity/knights-tour-551/src/RemoteComm.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/RemoteComm.sv|
+!i113 1
+R8
+R9
+R10
+n@remote@comm
+vrst_synch
+R0
+R28
+!i10b 1
+!s100 5DgHOGV7HJA[N2ieK?S_01
+R2
+IG>;ekVWOYjRjA^i_aOliN1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/rst_synch.sv
+FC:/Users/adity/knights-tour-551/src/rst_synch.sv
+!i122 36
+L0 1 19
+R6
+r1
+!s85 0
+31
+R29
+!s107 C:/Users/adity/knights-tour-551/src/rst_synch.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/rst_synch.sv|
+!i113 1
+R8
+R9
+R10
+vSPI_iNEMO4
+R0
+R28
+!i10b 1
+!s100 k;KimlM_]X18QPjXB1[CF1
+R2
+Ie>?:mYSOTKlR5ZA_GSnD@2
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/SPI_iNEMO4.sv
+FC:/Users/adity/knights-tour-551/src/SPI_iNEMO4.sv
+!i122 37
+L0 1 196
+R6
+r1
+!s85 0
+31
+R29
+!s107 C:/Users/adity/knights-tour-551/src/SPI_iNEMO4.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/SPI_iNEMO4.sv|
+!i113 1
+R8
+R9
+R10
+n@s@p@i_i@n@e@m@o4
+vSPI_mnrch
+R0
+Z30 !s110 1733530845
+!i10b 1
+!s100 k6bd3fmB8mn;NXK]z^KLM3
+R2
+IL`2mNXZOT4WPbRnG_5C2U2
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/SPI_mnrch.sv
+FC:/Users/adity/knights-tour-551/src/SPI_mnrch.sv
+!i122 38
+L0 7 117
+R6
+r1
+!s85 0
+31
+R29
+!s107 C:/Users/adity/knights-tour-551/src/SPI_mnrch.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/SPI_mnrch.sv|
+!i113 1
+R8
+R9
+R10
+n@s@p@i_mnrch
+vsponge
+R0
+R30
+!i10b 1
+!s100 :fCKRiPVfWnf@dc1:Yn`c0
+R2
+I7FRB7X2P<e9GdzbdRi^Rm1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/sponge.sv
+FC:/Users/adity/knights-tour-551/src/sponge.sv
+!i122 39
+L0 6 182
+R6
+r1
+!s85 0
+31
+Z31 !s108 1733530845.000000
+!s107 C:/Users/adity/knights-tour-551/src/sponge.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/sponge.sv|
+!i113 1
+R8
+R9
+R10
+Xtb_tasks
+R0
+!s110 1733530821
+!i10b 1
+!s100 ?U9^3nz`=LK_TQOkXIZ=[1
+R2
+I@_0m4>nb0^EVm1lV3VX`N2
+V@_0m4>nb0^EVm1lV3VX`N2
+S1
+R4
+w1733529059
+8C:/Users/adity/knights-tour-551/src/tb_tasks.sv
+FC:/Users/adity/knights-tour-551/src/tb_tasks.sv
+!i122 14
+L0 1 0
+R6
+r1
+!s85 0
+31
+!s108 1733530821.000000
+!s107 C:/Users/adity/knights-tour-551/src/tb_tasks.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/adity/knights-tour-551/src/tb_tasks.sv|
+!i113 1
+R27
+R10
+XTest1_sv_unit
+R0
+R20
+R21
+VgBRTNBQV[d2W:9;>?1gle0
+r1
+!s85 0
+!i10b 1
+!s100 f`C]ATe8Se`1JHb:;S[D_3
+IgBRTNBQV[d2W:9;>?1gle0
+!i103 1
+S1
+R4
+R5
+R22
+R23
+!i122 15
+L0 4 0
+R6
+31
+R24
+R25
+R26
+!i113 1
+R27
+R10
+n@test1_sv_unit
+vTourCmd
+R0
+R30
+!i10b 1
+!s100 PC8]AY>EIkm75[LCSYAFM3
+R2
+I2JUFR^;nB@=:;:hOQ]IgJ3
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/TourCmd.sv
+FC:/Users/adity/knights-tour-551/src/TourCmd.sv
+!i122 40
+L0 1 119
+R6
+r1
+!s85 0
+31
+R31
+!s107 C:/Users/adity/knights-tour-551/src/TourCmd.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/TourCmd.sv|
+!i113 1
+R8
+R9
+R10
+n@tour@cmd
+vTourLogic
+R0
+R30
+!i10b 1
+!s100 R0ZBLDRN49B>B=RGR:;>b0
+R2
+IDJ^nN@97fS>`gdYHD1<O]1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/TourLogic.sv
+FC:/Users/adity/knights-tour-551/src/TourLogic.sv
+!i122 41
+R19
+R6
+r1
+!s85 0
+31
+R31
+!s107 C:/Users/adity/knights-tour-551/src/TourLogic.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/TourLogic.sv|
+!i113 1
+R8
+R9
+R10
+n@tour@logic
+vUART
+R0
+R30
+!i10b 1
+!s100 MnVPHbJzecM=WciQX=C953
+R2
+IA1g1CbAmdoENoWP4Nmn3_0
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/UART.sv
+FC:/Users/adity/knights-tour-551/src/UART.sv
+!i122 42
+L0 4 24
+R6
+r1
+!s85 0
+31
+R31
+!s107 C:/Users/adity/knights-tour-551/src/UART.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/UART.sv|
+!i113 1
+R8
+R9
+R10
+n@u@a@r@t
+vUART_rx
+R0
+R30
+!i10b 1
+!s100 GH?NGd2Zme9KD>R1Q?_:B3
+R2
+IA79a`;A^@O>Z^[EDAhW9?2
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/UART_rx.sv
+FC:/Users/adity/knights-tour-551/src/UART_rx.sv
+!i122 43
+L0 8 105
+R6
+r1
+!s85 0
+31
+R31
+!s107 C:/Users/adity/knights-tour-551/src/UART_rx.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/UART_rx.sv|
+!i113 1
+R8
+R9
+R10
+n@u@a@r@t_rx
+vUART_tx
+R0
+R30
+!i10b 1
+!s100 D7]dmgiF>S=U8<29Xh?h_0
+R2
+INYHH0XCW5?JgPQ^M1geQc1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/UART_tx.sv
+FC:/Users/adity/knights-tour-551/src/UART_tx.sv
+!i122 44
+L0 10 101
+R6
+r1
+!s85 0
+31
+R31
+!s107 C:/Users/adity/knights-tour-551/src/UART_tx.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/UART_tx.sv|
+!i113 1
+R8
+R9
+R10
+n@u@a@r@t_tx
+vUART_wrapper
+R0
+!s110 1733530846
+!i10b 1
+!s100 8iUV^z3]^dWdi6o?Mn=:i3
+R2
+I0Ff0lce<YBV`LMmkok4mM1
+R3
+S1
+R4
+R5
+8C:/Users/adity/knights-tour-551/src/UART_wrapper.sv
+FC:/Users/adity/knights-tour-551/src/UART_wrapper.sv
+!i122 45
+L0 8 87
+R6
+r1
+!s85 0
+31
+!s108 1733530846.000000
+!s107 C:/Users/adity/knights-tour-551/src/UART_wrapper.sv|
+!s90 -reportprogress|300|-work|work|-sv|-cover|sbcet3|-stats=none|C:/Users/adity/knights-tour-551/src/UART_wrapper.sv|
+!i113 1
+R8
+R9
+R10
+n@u@a@r@t_wrapper

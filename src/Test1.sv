@@ -101,7 +101,7 @@ module KnightsTour_tb1();
 
     calibrateDUT(clk, iDUT.cal_done, send_cmd, cmd);
 
-    @(posedge resp_rdy);
+    waitRespRdy(clk, resp_rdy);
     @(negedge clk);
     assert (resp == 8'hA5) $display("Positive acknowledgement received");
     else begin

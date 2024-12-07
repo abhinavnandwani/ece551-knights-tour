@@ -1,7 +1,7 @@
 /**
-*This module tests the tour logic 
+*This module tests the tour logic from every possible black square
 */
-
+import tb_tasks::*;
 module KnightsTour_tb5();
 
     localparam FAST_SIM = 1;
@@ -53,11 +53,11 @@ module KnightsTour_tb5();
     logic [2:0] countCntr;
     logic [1:0] countLft, countRght;
     int i, j, k,h;
-    logic [7:0] val;
-    logic [7:0] cM [23:0];
+    logic [3:0] val;
+    logic [3:0] cM [23:0];
     logic b[4:0][4:0];
     logic [4:0] count;
-    logic [3:0] partCMD1, partCMD2;
+    logic [3:0] partCMD1, partCMD2, sumParts;
 
     always begin
         clk = 0;
@@ -72,44 +72,22 @@ module KnightsTour_tb5();
         @(negedge clk);
         RST_n = 1;
 
-        fork
-            begin: timeoutSetup
-                repeat (1000000) @(posedge clk);
-                $display("Timed out waiting for Nemo_setup");
-                $stop();
-            end
-            begin
-                @(posedge iPHYS.iNEMO.NEMO_setup);
-                disable timeoutSetup;
-                $display("NEMO_setup asserted");
-            end
-        join
+        nemosetup(clk, iPHYS.iNEMO.NEMO_setup);
 
-        @(negedge clk);
-        cmd = 16'h2000; //Callibrate command
-        send_cmd = 1;
-
-        @(negedge clk);
-        send_cmd = 0;
-        fork
-            begin: timeoutCal
-                repeat (1000000) @(posedge clk);
-                $display("Timed out waiting for cal_done");
-                $stop();
-            end
-            begin
-                @(posedge iDUT.cal_done);
-                disable timeoutCal;
-                $display("cal_done asserted");
-            end
-        join
-
-        for (int k = 0; k < 5; k= k+2) begin
-            for (int h = 0; h < 5; h = h+2) begin
+        calibrateDUT(clk, iDUT.cal_done, send_cmd, cmd);
+        
+        for (int k = 0; k < 5; k++) begin
+            for (int h = 0; h < 5; h++) begin
                 @(posedge resp_rdy);
                 @(negedge clk);
+                sumParts = k+h;
+                if (sumParts[0] == 1) begin
+                    continue; //FIlter non black squares
+                end
+                count = 5'h00;
                 partCMD1 = k;
                 partCMD2 = h;
+
                 cmd = {8'h60, partCMD1, partCMD2};
                 $display("%d %d %h", k,h,cmd);
                 send_cmd = 1;
@@ -126,7 +104,7 @@ module KnightsTour_tb5();
 
                 for (int i = 0; i < 24; i++) begin
                     val = 8'h00;
-                    for (int j = 0; j< 8; j++) begin
+                    for (int j = 0; j< 3; j++) begin
                         val = {val, cM[i][j]};
                     end
                     $display("%d : %h", i, val);

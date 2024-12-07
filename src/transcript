@@ -1,0 +1,79 @@
+# Compile of cmd_proc.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of IR_intf.sv was successful.
+# Compile of KnightPhysics.sv was successful.
+# Compile of KnightsTour.sv was successful.
+# Compile of MtrDrv.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of RemoteComm.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of SPI_iNEMO4.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of sponge.sv was successful.
+# Compile of tb_tasks.sv was successful.
+# Compile of Test1.sv was successful.
+# Compile of Test2.sv was successful.
+# Compile of Test3.sv was successful.
+# Compile of Test4.sv was successful.
+# Compile of Test5.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of TourLogic.sv was successful.
+# Compile of UART.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# Compile of UART_wrapper.sv was successful.
+# 26 compiles, 0 failed with no errors.
+# Compile of cmd_proc.sv was successful.
+# Compile of inert_intf.sv was successful.
+# Compile of inertial_integrator.sv was successful.
+# Compile of IR_intf.sv was successful.
+# Compile of KnightPhysics.sv was successful.
+# Compile of KnightsTour.sv was successful.
+# Compile of MtrDrv.sv was successful.
+# Compile of PID.sv was successful.
+# Compile of PWM11.sv was successful.
+# Compile of RemoteComm.sv was successful.
+# Compile of rst_synch.sv was successful.
+# Compile of SPI_iNEMO4.sv was successful.
+# Compile of SPI_mnrch.sv was successful.
+# Compile of sponge.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of TourLogic.sv was successful.
+# Compile of UART.sv was successful.
+# Compile of UART_rx.sv was successful.
+# Compile of UART_tx.sv was successful.
+# Compile of UART_wrapper.sv was successful.
+# 20 compiles, 0 failed with no errors.
+vsim -gui work.KnightsTour_tb4 -coverage
+# vsim -gui work.KnightsTour_tb4 -coverage 
+# Start time: 18:21:02 on Dec 06,2024
+# Loading sv_std.std
+# Loading work.KnightsTour_tb4
+# Loading work.KnightsTour
+# Loading work.rst_synch
+# Loading work.UART_wrapper
+# Loading work.UART
+# Loading work.UART_tx
+# Loading work.UART_rx
+# Loading work.cmd_proc
+# Loading work.TourLogic
+# Loading work.TourCmd
+# Loading work.inert_intf
+# Loading work.SPI_mnrch
+# Loading work.inertial_integrator
+# Loading work.PID
+# Loading work.MtrDrv
+# Loading work.PWM11
+# Loading work.IR_intf
+# Loading work.PWM3
+# Loading work.sponge
+# Loading work.RemoteComm
+# Loading work.KnightPhysics
+# Loading work.SPI_iNEMO4
+# Loading work.inverse_PWM11e
+# ** Error: This product is not licensed for Code Coverage.
+# Error loading design
+# End time: 18:21:02 on Dec 06,2024, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 7
