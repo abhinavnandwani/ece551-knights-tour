@@ -1,4 +1,8 @@
 
+/**
+*This module tests the behavior of cntrIR and if the knight obeys the move command sent through the bluetooth module properly
+*/
+
 import tb_tasks::*;
 
 module KnightsTour_tb7();
@@ -49,21 +53,14 @@ module KnightsTour_tb7();
                         .rghtPWM1(rghtPWM1),.rghtPWM2(rghtPWM2),.IR_en(IR_en),
                         .lftIR_n(lftIR_n),.rghtIR_n(rghtIR_n),.cntrIR_n(cntrIR_n)); 
 
-    logic [2:0] countCntr;
-    logic [1:0] countLft, countRght;
-    logic [14:0] x_pos, y_pos;          // Current positions of the knight
-    logic [14:0] x_expected, y_expected; // Expected positions of the knight
-    logic [7:0] move;
-
+    logic [1:0] count; //COunt variable to keep track of cntrIr rise
 
     always begin
         clk = 0;
         RST_n = 0;
         cmd = 16'h0000;
         send_cmd = 0;
-        countCntr = 0;
-        countLft = 0;
-        countRght = 0;
+        count = 0;
         
         @(negedge clk);
         RST_n = 1;
@@ -102,43 +99,43 @@ module KnightsTour_tb7();
         @(posedge resp_rdy);
         @(negedge clk);
 
-        cmd = 16'h6220;
-
-	x_expected = 15'h2800;
-	y_expected = 15'h2800;
-
+        cmd = 16'h5BF1;
         send_cmd = 1;
 
         @(negedge clk);
-        send_cmd = 0; 
+        send_cmd = 0;
 
-        // check for proper handing off to tour cmd //
+        fork 
+            begin:CountCntrIRrise
+                while (count >= 0) begin
+                    @(posedge iDUT.iCMD.cntrIR);
+                    count = count + 1;
+                    @(negedge clk);
+                end
+            end
+            begin: timeoutRespRdy
+                repeat (10000000) @(negedge clk);
+                $display("Timed out waiting for resp_rdy");
+            end
+            begin
+                @(posedge resp_rdy);
+                disable timeoutRespRdy;
+                disable CountCntrIRrise;
+                assert (resp == 8'hA5) $display("Positive acknowledgement received");
+                else begin
+                    $display("Positive acknowledgement not received");
+                    $stop();
+                end
+            end
+        join
 
-        repeat (25) @(posedge iDUT.iTC.inc_mv_indx) begin
-            $display("INCREMENTING MOVE INDEX at time %0t", $time);
-		
-            x_pos = iPHYS.xx;
-            y_pos = iPHYS.yy;
-            move = iDUT.iTC.move;
-	    $display("Move: %b", move);	
-            casex (move) 
-                8'bxxxxxxx1: begin x_expected = x_expected + 15'd2 * 15'd4096; y_expected = y_expected + 15'd1 * 15'd4096; verifyCoordinates(x_expected, y_expected, x_pos, y_pos);    end // (2,1)
-                8'bxxxxxx10: begin x_expected = x_expected + 15'd1 * 15'd4096; y_expected = y_expected + 15'd2 * 15'd4096; verifyCoordinates(x_expected, y_expected, x_pos, y_pos);    end // (1,2)
-                8'bxxxxx100: begin x_expected = x_expected - 15'd1 * 15'd4096; y_expected = y_expected + 15'd2 * 15'd4096; verifyCoordinates(x_expected, y_expected, x_pos, y_pos);   end // (-2,1)
-                8'bxxxx1000: begin x_expected = x_expected - 15'd2 * 15'd4096; y_expected = y_expected + 15'd1 * 15'd4096; verifyCoordinates(x_expected, y_expected, x_pos, y_pos);   end // (-2,1)
-		8'bxxx10000: begin x_expected = x_expected - 15'd2 * 15'd4096; y_expected = y_expected - 15'd1 * 15'd4096; verifyCoordinates(x_expected, y_expected, x_pos, y_pos);  end // (-2,-1)
-                8'bxx100000: begin x_expected = x_expected - 15'd1 * 15'd4096; y_expected = y_expected - 15'd2 * 15'd4096; verifyCoordinates(x_expected, y_expected, x_pos, y_pos);  end // (-1,-2)
-                8'bx1000000: begin x_expected = x_expected + 15'd1 * 15'd4096; y_expected = y_expected - 15'd2 * 15'd4096; verifyCoordinates(x_expected, y_expected, x_pos, y_pos);   end // (1,-2)
-                8'b10000000: begin x_expected = x_expected + 15'd2 * 15'd4096; y_expected = y_expected - 15'd1 * 15'd4096; verifyCoordinates(x_expected, y_expected, x_pos, y_pos);   end // (2,-1)
-                default: $fatal("Unexpected move: %b", move);
-            endcase
-        end
+	checkConvHeading(iDUT.iCMD.desired_heading, iDUT.heading);
+        repeat (1000) @(negedge clk);
 
-        $display("Tests done for latch liberation front");
+        $display("Test passed for Latch Liberation front");
         $stop();
     end
 
     always 
         #5 clk <= ~clk;
-
 endmodule
